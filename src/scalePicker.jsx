@@ -1,12 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
-function ScalePicker({ selectedKey, setSelectedKey, selectedScale, setSelectedScale }) {
+function ScalePicker({ selectedKey, setSelectedKey, selectedScale, setSelectedScale, scales }) {
 
-    const scales = [
-        { id : 1, name : 'Major'},
-        { id : 2, name : 'Minor'},
-        { id : 3, name : 'Dorian'}
-    ]
     const keys = [
         {id : 1 , name : 'C'},
         {id : 2 , name : 'D'},
@@ -21,6 +16,11 @@ function ScalePicker({ selectedKey, setSelectedKey, selectedScale, setSelectedSc
     const handleKeys = (e) => {
         setSelectedKey(e.target.value)
     }
+
+    useEffect(() => {
+
+        console.log(selectedScale)
+    }, [selectedScale])
 
     return (
         <div className="container">
@@ -41,9 +41,9 @@ function ScalePicker({ selectedKey, setSelectedKey, selectedScale, setSelectedSc
                 <label className="mx-2" htmlFor="scale">Scale
                 </label>
                 <select className="" name="scale" id="scale" value={selectedScale} onChange={(e) => setSelectedScale(e.target.value)}>
-                    {scales.map((scale) => {
+                    {Object.entries(scales).map(([key, scale]) => {
                         return (
-                            <option key={scale.name} value={scale.name}>{scale.name}</option>
+                            <option key={scale.name} value={key}>{scale.name}</option>
                         )
                     })}
                 </select>
