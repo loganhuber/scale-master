@@ -5,7 +5,7 @@ import Metronome from './metronome.jsx'
 import ScaleDisplay from './scaleDisplay.jsx'
 function App() {
     const [selectedKey, setSelectedKey] = useState('C')
-    const [selectedScale, setSelectedScale] = useState('Major')
+    const [selectedScale, setSelectedScale] = useState('major')
     const [isListening, setIsListening] = useState(false)
     const scales = {
         major: { 
@@ -98,7 +98,8 @@ function App() {
 
         <ScaleDisplay
         selectedScale={selectedScale}
-        scales={scales} />
+        scales={scales}
+        selectedKey={selectedKey} />
 
         </>
     )
