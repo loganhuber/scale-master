@@ -71,7 +71,7 @@ function Microphone({ isListening }) {
         const midi = frequencyToMidi(pitch)
         // console.log(`MIDI: ${midi}`)
         const note = midiToNote(midi)
-        console.log(`$NOTE: ${note}`)
+        // console.log(`$NOTE: ${note}`)
 
         setPitch(Math.round(pitch * 10) / 10)
         setClarity(Math.round(clarity * 100))

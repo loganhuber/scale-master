@@ -11,7 +11,7 @@ function ScaleDisplay({ selectedScale, scales, selectedKey }) {
         const scale = intervals.map((interval) => {
             return arranged[interval]
         })
-        return scale
+        return [...scale, chromatic[index]]
     }
 
     useEffect(() => {
@@ -22,7 +22,7 @@ function ScaleDisplay({ selectedScale, scales, selectedKey }) {
     }, [selectedScale, selectedKey])
 
     return (
-        <div className="container">
+        <div className="d-flex justify-content-center my-5">
             <div className="d-flex gap-5">
                 { notes.map((note, index) => {
                     return (
