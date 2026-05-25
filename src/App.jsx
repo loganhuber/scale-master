@@ -75,9 +75,11 @@ function App() {
     const [selectedKey, setSelectedKey] = useState('C')
     const [selectedScale, setSelectedScale] = useState('major')
     const [isListening, setIsListening] = useState(false)
-    const [count, setCount] = useState(null)
     const [isPlaying, setIsPlaying] = useState(false)
-
+    const [count, setCount] = useState(null)
+    const [currCardIndex, setCurrCardIndex] = useState(0)
+    
+    const currNoteRef = useRef(null)
     const bpmRef = useRef(60)
 
     return (
@@ -85,8 +87,10 @@ function App() {
         <CountIn 
         count={count}
         isPlaying={isPlaying}
-        bpmRef={bpmRef} />
+        bpmRef={bpmRef}
+        setIsListening={setIsListening} />
         <Microphone isListening={isListening}
+        currNoteRef={currNoteRef}
             // setIsListening={setIsListening}
             />
         <div className="container-fluid">
@@ -115,7 +119,13 @@ function App() {
         <ScaleDisplay
         selectedScale={selectedScale}
         scales={scales}
-        selectedKey={selectedKey} />
+        selectedKey={selectedKey}
+        count={count}
+        currNoteRef={currNoteRef}
+        isListening={isListening}
+        currCardIndex={currCardIndex}
+        setCurrCardIndex={setCurrCardIndex}
+        />
 
         </>
     )

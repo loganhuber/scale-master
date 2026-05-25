@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import './countIn.css'
 
-function CountIn({ count, isPlaying, bpmRef }) {
+function CountIn({ count, isPlaying, bpmRef, setIsListening }) {
     const [isShown, setIsShown] = useState(false)
     // const [isComplete, setIsComplete] = useState(true)
 
@@ -10,6 +10,7 @@ function CountIn({ count, isPlaying, bpmRef }) {
             setTimeout(() => {
                 // setIsComplete(true)
                 setIsShown(false)
+                setIsListening(true)
 
             }, 60000 / bpmRef.current)
         }

@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react'
 import './scaleDisplay.css'
 
-function ScaleDisplay({ selectedScale, scales, selectedKey }) {
+function ScaleDisplay({ selectedScale, scales, selectedKey, count, currNoteRef, isListening, currCardIndex, setCurrCardIndex }) {
     const [notes, setNotes] = useState([getNotes('C', [0, 2, 4, 5, 7, 9, 11])])
+    
+    const [cardResults, setCardResults] = useState(Array(notes.length).fill(null))
 
+    // console.log("Card Results: " + cardResults)
     function getNotes(key, intervals) {
         const chromatic = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
         const index = chromatic.indexOf(key);
@@ -14,6 +17,26 @@ function ScaleDisplay({ selectedScale, scales, selectedKey }) {
         return [...scale, chromatic[index]]
     }
 
+
+    // helper function, returns bool based on if the note played matches the intended note
+    function checkNote(intendedNote, notePlayed) {
+        notePlayed = notePlayed.replace(/\d+/g, '')
+        if (intendedNote == notePlayed) return true;
+
+        else return false;
+    }
+
+    function updateCardResults(index, isAccurate) {
+        let currResults = [...cardResults]
+        if (isAccurate) {
+            currResults[index] = 'correct'
+        }
+        if (!isAccurate) {
+            currResults[index] = 'incorrect'
+        }
+        setCardResults(currResults)
+    }
+
     useEffect(() => {
         const interval = scales[selectedScale].intervals
         setNotes(() => {
@@ -21,12 +44,35 @@ function ScaleDisplay({ selectedScale, scales, selectedKey }) {
         })
     }, [selectedScale, selectedKey])
 
+    useEffect(() => {
+        const totalNotes = notes.length;
+
+        if (!isListening || totalNotes <= currCardIndex) return;
+
+        setCurrCardIndex(prev => prev + 1)
+        const isAccurate = checkNote(notes[currCardIndex], currNoteRef.current)
+        updateCardResults(currCardIndex, isAccurate)
+        console.log(cardResults)
+            // update card color based on whether the note was accurate
+        
+    }, [count])
+
+    useEffect(() => {
+        console.log(`Curr NoteRef: ${currNoteRef.current}`)
+    }, [count])
+
     return (
         <div className="d-flex justify-content-center my-5">
             <div className="d-flex gap-5">
                 { notes.map((note, index) => {
+
+                    const result = cardResults[index]
+
+                    const cardClass = result === 'correct' ? 'bg-success' :
+                    result === 'incorrect' ? 'bg-danger' :
+                    'bg-primary'
                     return (
-                        <div key={note + index} className="note-card d-flex align-items-center justify-content-center bg-primary">
+                        <div key={index} className={`note-card d-flex align-items-center justify-content-center ${cardClass}`}>
                             <div className="">{note}</div>
                         </div>
                     )

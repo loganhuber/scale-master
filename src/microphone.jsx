@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { PitchDetector } from 'pitchy'
 
-function Microphone({ isListening }) {
+function Microphone({ isListening, currNoteRef }) {
     const [pitch, setPitch] = useState(null)
     const [clarity, setClarity] = useState(null)
     const [notePlayed, setNotePlayed] = useState(null)
@@ -72,6 +72,7 @@ function Microphone({ isListening }) {
         // console.log(`MIDI: ${midi}`)
         const note = midiToNote(midi)
         // console.log(`$NOTE: ${note}`)
+        currNoteRef.current = note
 
         setPitch(Math.round(pitch * 10) / 10)
         setClarity(Math.round(clarity * 100))
@@ -105,8 +106,6 @@ function Microphone({ isListening }) {
     return (
         <div className='container-12 m-5'>
             <div className="row justify-content-center text-center m-5">
-              
-
                     <p className='w-25'>
                         Pitch: {pitch ?? '--'} Hz
                     </p>
@@ -116,10 +115,7 @@ function Microphone({ isListening }) {
                     <p className='w-25'>
                         Clarity: {clarity ?? '--'}%
                     </p>
-                
             </div>
-
-            
         </div>
     )
 }

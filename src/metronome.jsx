@@ -33,7 +33,7 @@ function Metronome( { setIsListening, count, setCount, isPlaying, setIsPlaying, 
     
     const secondsPerBeat = 60 / bpmRef.current
     function start() {
-        setIsListening(true)
+        // setIsListening(true)
         setIsPlaying(prev => !prev)
         if (!audioRef.current) {
             audioRef.current = new AudioContext()
