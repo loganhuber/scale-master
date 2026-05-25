@@ -27,7 +27,7 @@ function Microphone({ isListening, currNoteRef }) {
         const note = notes[midi % 12]
         const octave = Math.floor(midi / 12) - 1
 
-        return note ? `${note}${octave}` : null
+        return note ? `${note}` : null
     }
 
     async function startListening() {
@@ -69,10 +69,12 @@ function Microphone({ isListening, currNoteRef }) {
         
         const [pitch, clarity] = detector.findPitch(input, sampleRate)
         const midi = frequencyToMidi(pitch)
-        // console.log(`MIDI: ${midi}`)
         const note = midiToNote(midi)
         // console.log(`$NOTE: ${note}`)
+
         currNoteRef.current = note
+        // note includes the octave number at the end
+        // make sure filter out when comparing against intended note
 
         setPitch(Math.round(pitch * 10) / 10)
         setClarity(Math.round(clarity * 100))

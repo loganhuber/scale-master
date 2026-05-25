@@ -3,15 +3,12 @@ import './countIn.css'
 
 function CountIn({ count, isPlaying, bpmRef, setIsListening }) {
     const [isShown, setIsShown] = useState(false)
-    // const [isComplete, setIsComplete] = useState(true)
 
     useEffect(() => {
         if (count == 4) {
             setTimeout(() => {
-                // setIsComplete(true)
                 setIsShown(false)
                 setIsListening(true)
-
             }, 60000 / bpmRef.current)
         }
     }, [count])
@@ -20,7 +17,6 @@ function CountIn({ count, isPlaying, bpmRef, setIsListening }) {
     useEffect(() => {
         if (isPlaying) {
             setIsShown(true)
-            // setIsComplete(false)
         }
     }, [isPlaying])
     

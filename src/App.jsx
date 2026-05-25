@@ -91,7 +91,6 @@ function App() {
         setIsListening={setIsListening} />
         <Microphone isListening={isListening}
         currNoteRef={currNoteRef}
-            // setIsListening={setIsListening}
             />
         <div className="container-fluid">
             <div className="row">

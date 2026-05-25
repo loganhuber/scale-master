@@ -33,7 +33,6 @@ function Metronome( { setIsListening, count, setCount, isPlaying, setIsPlaying, 
     
     const secondsPerBeat = 60 / bpmRef.current
     function start() {
-        // setIsListening(true)
         setIsPlaying(prev => !prev)
         if (!audioRef.current) {
             audioRef.current = new AudioContext()
@@ -88,7 +87,6 @@ function Metronome( { setIsListening, count, setCount, isPlaying, setIsPlaying, 
     }   
     return (
         <div className="container text-center">
-            {/* <h1 className="diplay-1">IS PLAYING: {isPlaying ? 'True' : 'False'}</h1> */}
             <label htmlFor="bpm">BPM: {bpm}</label>
             <input type="range" id="bpm" name="bpm" min="50" max="200" value={bpm} step="1" onChange={adjustBpm}></input>
             <div>COUNT: {count ?? '-'}</div>
