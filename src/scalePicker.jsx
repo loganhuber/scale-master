@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-function ScalePicker({ selectedKey, setSelectedKey, selectedScale, setSelectedScale, scales }) {
+function ScalePicker({ selectedKey, setSelectedKey, selectedScale, setSelectedScale, scales, isPlaying }) {
 
     const keys = [
         {id : 1 , name : 'C'},
@@ -33,7 +33,7 @@ function ScalePicker({ selectedKey, setSelectedKey, selectedScale, setSelectedSc
             <form className="d-flex flex-column align-items-center gap-1" action=''>
                 <div className="w-25">
                 <label className="mx-2" htmlFor="keys">Key: </label>
-                    <select className='' name="keys" id="keys" value={selectedKey} onChange={handleKeys}>
+                    <select className='' disabled={isPlaying} name="keys" id="keys" value={selectedKey} onChange={handleKeys}>
                     {keys.map((key) => {
                         return (
                             <option key={key.name} id={key.id} value={key.name}>{key.name}</option>
@@ -45,7 +45,7 @@ function ScalePicker({ selectedKey, setSelectedKey, selectedScale, setSelectedSc
                 <div className="w-25">
                 <label className="mx-2" htmlFor="scale">Scale
                 </label>
-                <select className="" name="scale" id="scale" value={selectedScale} onChange={(e) => setSelectedScale(e.target.value)}>
+                <select className="" disabled={isPlaying} name="scale" id="scale" value={selectedScale} onChange={(e) => setSelectedScale(e.target.value)}>
                     {Object.entries(scales).map(([key, scale]) => {
                         return (
                             <option key={scale.name} value={key}>{scale.name}</option>

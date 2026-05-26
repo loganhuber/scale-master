@@ -1,9 +1,13 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import './scaleDisplay.css'
 
-function ScaleDisplay({ selectedScale, scales, selectedKey, count, currNoteRef, isListening, currCardIndex, setCurrCardIndex }) {
+function ScaleDisplay({ selectedScale, scales, selectedKey, count, currNoteRef, isListening, currCardIndex, setCurrCardIndex, roundComplete, setRoundComplete }) {
     const [notes, setNotes] = useState([getNotes('C', [0, 2, 4, 5, 7, 9, 11])])
-    const [cardResults, setCardResults] = useState(Array(notes.length).fill(null)) 
+    const [cardResults, setCardResults] = useState(Array(notes.length).fill(null))
+    
+    const [totalRoundBeats, setTotalRoundBeats] = useState(8) 
+    
+    const roundIndexRef = useRef(0)
 
     // get arr of notes based on the selected key and scale
     function getNotes(key, intervals) {
@@ -30,6 +34,12 @@ function ScaleDisplay({ selectedScale, scales, selectedKey, count, currNoteRef, 
         setCardResults(currResults)
     }
 
+    function checkRoundComplete() {
+        if (roundIndexRef.current >= totalRoundBeats) {
+            setRoundComplete(true)
+        }
+    }
+
     // update notes when key or scale input is updated
     useEffect(() => {
         const interval = scales[selectedScale].intervals
@@ -37,6 +47,20 @@ function ScaleDisplay({ selectedScale, scales, selectedKey, count, currNoteRef, 
             return getNotes(selectedKey, interval)
         })
     }, [selectedScale, selectedKey])
+
+    // set total round beats to be in 4/4 regardless of note length
+    useEffect(() => {
+        const totalNotes = notes.length;
+        const remainder = totalNotes % 4;
+        setTotalRoundBeats(() => {
+            return totalNotes + remainder
+        })
+        setCurrCardIndex(0)
+    }, [selectedScale, notes])
+
+    // useEffect(() => {
+    //     console.log("total round beats: " + totalRoundBeats)
+    // }, [totalRoundBeats, selectedScale, notes])
 
     // each count check accuracy and adjust the dom as needed
     useEffect(() => {
@@ -48,12 +72,20 @@ function ScaleDisplay({ selectedScale, scales, selectedKey, count, currNoteRef, 
         const isAccurate = checkNote(notes[currCardIndex], currNoteRef.current)
 
         updateCardResults(currCardIndex, isAccurate)
-        // console.log(`card results: ${cardResults}`)
+        roundIndexRef.current = roundIndexRef.current + 1
+        checkRoundComplete()
     }, [count])
 
-    // useEffect(() => {
-    //     console.log(`Curr NoteRef: ${currNoteRef.current}`)
-    // }, [count])
+    useEffect(() => {
+        if (!roundComplete) return;
+        
+        setCardResults(Array(notes.length).fill(null));
+        setCurrCardIndex(0);
+        roundIndexRef.current = 0;
+        
+    }, [roundComplete])
+
+
 
     return (
         <div className="d-flex justify-content-center my-5">

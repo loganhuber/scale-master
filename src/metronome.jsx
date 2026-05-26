@@ -1,7 +1,7 @@
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 
-function Metronome( { setIsListening, count, setCount, isPlaying, setIsPlaying, bpmRef }) {
+function Metronome( { setIsListening, count, setCount, isPlaying, setIsPlaying, bpmRef, roundComplete }) {
     const [bpm, setBpm] = useState(60)
     
     
@@ -84,7 +84,14 @@ function Metronome( { setIsListening, count, setCount, isPlaying, setIsPlaying, 
         oscillator.start(audioRef.current.currentTime);
         oscillator.stop(audioRef.current.currentTime + duration);
     
-    }   
+    }
+
+    useEffect(() => {
+        if (roundComplete) stop();
+        console.log("STOPPED")
+    }, [roundComplete])
+
+
     return (
         <div className="container text-center">
             <label htmlFor="bpm">BPM: {bpm}</label>

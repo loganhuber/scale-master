@@ -78,6 +78,7 @@ function App() {
     const [isPlaying, setIsPlaying] = useState(false)
     const [count, setCount] = useState(null)
     const [currCardIndex, setCurrCardIndex] = useState(0)
+    const [roundComplete, setRoundComplete] = useState(false)
     
     const currNoteRef = useRef(null)
     const bpmRef = useRef(60)
@@ -100,6 +101,7 @@ function App() {
                         selectedScale={selectedScale}
                         setSelectedScale={setSelectedScale}
                         scales={scales}
+                        isPlaying={isPlaying}
                         />
                 </div>
                 <div className="col-6">
@@ -110,6 +112,7 @@ function App() {
                     isPlaying={isPlaying}
                     setIsPlaying={setIsPlaying}
                     bpmRef={bpmRef}
+                    roundComplete={roundComplete}
                         />
                 </div>
             </div>
@@ -124,6 +127,8 @@ function App() {
         isListening={isListening}
         currCardIndex={currCardIndex}
         setCurrCardIndex={setCurrCardIndex}
+        roundComplete={roundComplete}
+        setRoundComplete={setRoundComplete}
         />
 
         </>
