@@ -4,7 +4,6 @@ import './scaleDisplay.css'
 function ScaleDisplay({ selectedScale, scales, selectedKey, count, currNoteRef, isListening, currCardIndex, setCurrCardIndex, roundComplete, setRoundComplete }) {
     const [notes, setNotes] = useState([getNotes('C', [0, 2, 4, 5, 7, 9, 11])])
     const [cardResults, setCardResults] = useState(Array(notes.length).fill(null))
-    
     const [totalRoundBeats, setTotalRoundBeats] = useState(8) 
     
     const roundIndexRef = useRef(0)
@@ -27,6 +26,7 @@ function ScaleDisplay({ selectedScale, scales, selectedKey, count, currNoteRef, 
         else return false;
     }
 
+    // update results array, keeping track of which card is accurate/inaccurate
     function updateCardResults(index, isAccurate) {
         let currResults = [...cardResults]
         isAccurate ? currResults[index] = 'correct' : currResults[index] = 'incorrect'
@@ -82,6 +82,8 @@ function ScaleDisplay({ selectedScale, scales, selectedKey, count, currNoteRef, 
         setCardResults(Array(notes.length).fill(null));
         setCurrCardIndex(0);
         roundIndexRef.current = 0;
+
+        setRoundComplete(false)
         
     }, [roundComplete])
 

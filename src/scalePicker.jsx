@@ -22,10 +22,6 @@ function ScalePicker({ selectedKey, setSelectedKey, selectedScale, setSelectedSc
         setSelectedKey(e.target.value)
     }
 
-    useEffect(() => {
-
-        console.log(selectedScale)
-    }, [selectedScale])
 
     return (
         <div className="container">

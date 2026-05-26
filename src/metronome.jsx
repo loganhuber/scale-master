@@ -3,14 +3,11 @@ import { useState, useRef, useEffect } from 'react'
 
 function Metronome( { setIsListening, count, setCount, isPlaying, setIsPlaying, bpmRef, roundComplete }) {
     const [bpm, setBpm] = useState(60)
-    
-    
-    // const countRef = useRef(null)
     const audioRef = useRef(null)
     const startTimeRef = useRef(null)
     const beatRef = useRef(0)
     const frameRef = useRef(null)
-    // const bpmRef = useRef(60)
+
     
     function adjustBpm(e) {
         const newBpm = Number(e.target.value)
