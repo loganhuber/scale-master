@@ -18,7 +18,7 @@ function ScaleDisplay({ selectedScale, scales, selectedKey, count, currNoteRef, 
 
     // returns bool based on if the note played matches the intended note
     function checkNote(intendedNote, notePlayed) {
-        notePlayed = notePlayed.replace(/\d+/g, '') // filter out the octave number
+        if (notePlayed) notePlayed = notePlayed.replace(/\d+/g, '') // filter out the octave number
         if (intendedNote == notePlayed) return true;
         else return false;
     }
@@ -60,14 +60,14 @@ function ScaleDisplay({ selectedScale, scales, selectedKey, count, currNoteRef, 
             <div className="d-flex gap-5">
                 { notes.map((note, index) => {
                     const result = cardResults[index]
-
+                    const currentClass = index == currCardIndex ? 'current' : ''
                     // color based on accuracy
                     const cardClass = result === 'correct' ? 'bg-success' :
                     result === 'incorrect' ? 'bg-danger' :
                     'bg-primary'
                     return (
-                        <div key={index} className={`note-card d-flex align-items-center justify-content-center ${cardClass}`}>
-                            <div className="">{note}</div>
+                        <div key={index} className={`note-card d-flex align-items-center justify-content-center ${cardClass} ${currentClass}`}>
+                            <div className="note-text">{note}</div>
                         </div>
                     )
                 })}
