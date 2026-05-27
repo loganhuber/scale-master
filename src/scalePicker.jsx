@@ -17,7 +17,6 @@ function ScalePicker({ selectedKey, setSelectedKey, selectedScale, setSelectedSc
         {id : 12 , name : 'B'},
     ]
 
-
     const handleKeys = (e) => {
         setSelectedKey(e.target.value)
     }

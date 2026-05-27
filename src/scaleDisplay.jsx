@@ -52,10 +52,10 @@ function ScaleDisplay({ selectedScale, scales, selectedKey, count, currNoteRef, 
     useEffect(() => {
         const totalNotes = notes.length;
         const remainder = totalNotes % 4;
-        setTotalRoundBeats(() => {
-            return totalNotes + remainder
-        })
+        const extraBeats = remainder === 0 ? 0 : 4 - remainder
+        setTotalRoundBeats(totalNotes + extraBeats)
         setCurrCardIndex(0)
+        roundIndexRef.current = 0
     }, [selectedScale, notes])
 
     // useEffect(() => {
@@ -64,25 +64,35 @@ function ScaleDisplay({ selectedScale, scales, selectedKey, count, currNoteRef, 
 
     // each count check accuracy and adjust the dom as needed
     useEffect(() => {
+        if (!isListening) return;
+
         const totalNotes = notes.length;
-        // stop if we went through all the cards
-        if (!isListening || totalNotes <= currCardIndex) return;
-
-        setCurrCardIndex(prev => prev + 1)
-        const isAccurate = checkNote(notes[currCardIndex], currNoteRef.current)
-
-        updateCardResults(currCardIndex, isAccurate)
         roundIndexRef.current = roundIndexRef.current + 1
+   
+        if (currCardIndex < totalNotes) {
+            setCurrCardIndex(prev => prev + 1)
+            const isAccurate = checkNote(notes[currCardIndex], currNoteRef.current)
+            updateCardResults(currCardIndex, isAccurate)
+        }
+
         checkRoundComplete()
     }, [count])
+
+    // make sure roundIndexRef always resets to 0 when listening stops
+    useEffect(() => {
+        if (isListening) return;
+        roundIndexRef.current = 0;
+    }, [isListening])
 
     useEffect(() => {
         if (!roundComplete) return;
         
+        // reset cards, card index, and round index
         setCardResults(Array(notes.length).fill(null));
         setCurrCardIndex(0);
         roundIndexRef.current = 0;
 
+        // get ready for the next round
         setRoundComplete(false)
         
     }, [roundComplete])

@@ -84,7 +84,6 @@ function Microphone({ isListening, currNoteRef }) {
     }
 
     function stopListening() {
-        if (isListening) return;
         clearTimeout(timeoutRef.current)
         audioContextRef.current?.close()
         streamRef.current?.getTracks().forEach((track) => track.stop())

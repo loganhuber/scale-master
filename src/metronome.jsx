@@ -43,7 +43,7 @@ function Metronome( { setIsListening, count, setCount, isPlaying, setIsPlaying, 
 
     function stop() {
         setIsListening(false)
-        setIsPlaying(prev => !prev)
+        setIsPlaying(false)
         setCount(null)
         cancelAnimationFrame(frameRef.current)
     }
