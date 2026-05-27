@@ -89,6 +89,7 @@ function Microphone({ isListening, currNoteRef }) {
         streamRef.current?.getTracks().forEach((track) => track.stop())
         setPitch(null)
         setClarity(null)
+        
     }
 
     useEffect(() => {

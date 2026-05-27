@@ -1,7 +1,7 @@
 
 import { useState, useRef, useEffect } from 'react'
 
-function Metronome( { setIsListening, count, setCount, isPlaying, setIsPlaying, bpmRef, roundComplete }) {
+function Metronome( { setIsListening, count, setCount, isPlaying, setIsPlaying, bpmRef, roundComplete, setRoundComplete }) {
     const [bpm, setBpm] = useState(60)
     const audioRef = useRef(null)
     const startTimeRef = useRef(null)
@@ -46,6 +46,8 @@ function Metronome( { setIsListening, count, setCount, isPlaying, setIsPlaying, 
         setIsPlaying(false)
         setCount(null)
         cancelAnimationFrame(frameRef.current)
+        // console.log("Metronome stopped")
+        if (!roundComplete) setRoundComplete(true) // stop round in case user hits stop button
     }
 
     function tick() {
@@ -84,9 +86,11 @@ function Metronome( { setIsListening, count, setCount, isPlaying, setIsPlaying, 
     }
 
     useEffect(() => {
-        if (roundComplete) stop();
-        console.log("STOPPED")
-    }, [roundComplete])
+        if (!roundComplete) return;
+
+        stop();
+        setRoundComplete(false);
+    }, [roundComplete, setRoundComplete])
 
 
     return (

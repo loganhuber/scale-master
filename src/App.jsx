@@ -113,6 +113,7 @@ function App() {
                     setIsPlaying={setIsPlaying}
                     bpmRef={bpmRef}
                     roundComplete={roundComplete}
+                    setRoundComplete={setRoundComplete}
                         />
                 </div>
             </div>

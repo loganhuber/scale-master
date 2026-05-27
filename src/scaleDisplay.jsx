@@ -56,7 +56,7 @@ function ScaleDisplay({ selectedScale, scales, selectedKey, count, currNoteRef, 
         setTotalRoundBeats(totalNotes + extraBeats)
         setCurrCardIndex(0)
         roundIndexRef.current = 0
-    }, [selectedScale, notes])
+    }, [notes])
 
     // useEffect(() => {
     //     console.log("total round beats: " + totalRoundBeats)
@@ -85,17 +85,14 @@ function ScaleDisplay({ selectedScale, scales, selectedKey, count, currNoteRef, 
     }, [isListening])
 
     useEffect(() => {
-        if (!roundComplete) return;
-        
+        if (!roundComplete || isListening) return;
+
         // reset cards, card index, and round index
         setCardResults(Array(notes.length).fill(null));
         setCurrCardIndex(0);
         roundIndexRef.current = 0;
-
-        // get ready for the next round
-        setRoundComplete(false)
         
-    }, [roundComplete])
+    }, [roundComplete, notes.length, isListening])
 
 
 
