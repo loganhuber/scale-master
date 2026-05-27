@@ -85,7 +85,7 @@ function ScaleDisplay({ selectedScale, scales, selectedKey, count, currNoteRef, 
     }, [isListening])
 
     useEffect(() => {
-        if (!roundComplete || isListening) return;
+        if (!roundComplete) return;
 
         // reset cards, card index, and round index
         setCardResults(Array(notes.length).fill(null));
