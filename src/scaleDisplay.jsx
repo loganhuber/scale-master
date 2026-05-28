@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import './scaleDisplay.css'
 
-function ScaleDisplay({ selectedScale, scales, selectedKey, count, currNoteRef, isListening, currCardIndex, setCurrCardIndex, roundComplete, setRoundComplete }) {
+function ScaleDisplay({ selectedScale, scales, selectedKey, count, currNoteRef, isListening, currCardIndex, setCurrCardIndex, roundComplete, setRoundComplete, currScoreRef }) {
     const [notes, setNotes] = useState([getNotes('C', [0, 2, 4, 5, 7, 9, 11])])
     const [cardResults, setCardResults] = useState(Array(notes.length).fill(null))
     const [totalRoundBeats, setTotalRoundBeats] = useState(8) 
@@ -72,6 +72,7 @@ function ScaleDisplay({ selectedScale, scales, selectedKey, count, currNoteRef, 
         if (currCardIndex < totalNotes) {
             setCurrCardIndex(prev => prev + 1)
             const isAccurate = checkNote(notes[currCardIndex], currNoteRef.current)
+            currScoreRef.current.push(isAccurate)
             updateCardResults(currCardIndex, isAccurate)
         }
 

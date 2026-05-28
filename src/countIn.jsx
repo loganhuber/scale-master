@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import './countIn.css'
+import './index.css'
 
 function CountIn({ count, isPlaying, bpmRef, setIsListening }) {
     const [isShown, setIsShown] = useState(false)
@@ -30,7 +30,7 @@ function CountIn({ count, isPlaying, bpmRef, setIsListening }) {
         <>
             {isShown ?
                 (
-                <div className="count-in-overlay">
+                <div className="message-overlay">
                     <h2 className="Display-1">Ready in...</h2>
                     <div className="count-number">{count}</div>
                 </div>

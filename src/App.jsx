@@ -4,6 +4,7 @@ import ScalePicker from './scalePicker.jsx'
 import Metronome from './metronome.jsx'
 import ScaleDisplay from './scaleDisplay.jsx'
 import CountIn from './countIn.jsx'
+import Score from './score.jsx'
 
 const scales = {
     major: { 
@@ -82,6 +83,7 @@ function App() {
     
     const currNoteRef = useRef(null)
     const bpmRef = useRef(60)
+    const currScoreRef = useRef([])
 
     return (
         <>
@@ -90,9 +92,16 @@ function App() {
         isPlaying={isPlaying}
         bpmRef={bpmRef}
         setIsListening={setIsListening} />
+
+        <Score 
+        roundComplete={roundComplete}
+        currScoreRef={currScoreRef}
+        />
+
         <Microphone isListening={isListening}
         currNoteRef={currNoteRef}
             />
+
         <div className="container-fluid">
             <div className="row">
                 <div className="col-6">
@@ -130,6 +139,7 @@ function App() {
         setCurrCardIndex={setCurrCardIndex}
         roundComplete={roundComplete}
         setRoundComplete={setRoundComplete}
+        currScoreRef={currScoreRef}
         />
 
         </>
