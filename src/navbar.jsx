@@ -3,19 +3,18 @@ import { useState } from 'react'
 function Navbar() {
     const [loggingIn, setLoggingIn] = useState(false)
     const [isRegistering, setIsRegistering] = useState(false)
+    const [viewingStats, setViewingStats] = useState(false)
 
     const LoginForm = () => {
         return (
             <div className="message-overlay">
             <h3>Login</h3>
             <form action="" className="d-flex flex-column m-5 gap-3">
-
                     <label htmlFor="name">Name</label>
                     <input type="text" name="name" required/>
 
                     <label htmlFor="password" >Password</label>
                     <input type="password" name="password" required />
-              
                 <button className="btn btn-light">Login</button>
             </form>
 
@@ -62,6 +61,24 @@ function Navbar() {
         )
     }
 
+    const UserStats = () => {
+        return (
+            <div className="message-overlay">
+                <h2>Stats</h2>
+                <p>user name</p>
+                <ul>
+                    <li>stat 1</li>
+                    <li>stat 1</li>
+                    <li>stat 1</li>
+                    <li>stat 1</li>
+                </ul>
+                <button className='btn btn-light' onClick={() => {
+                    setViewingStats(false)
+                }}>Close</button>
+            </div>
+        )
+    }
+
 
 
 
@@ -69,6 +86,7 @@ function Navbar() {
         <>
         { loggingIn ? <LoginForm />: ''}
         { isRegistering ? <RegisterForm /> : ''}
+        { viewingStats ? <UserStats /> : ''}
         <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
             <a className="navbar-brand" href="#">Let's Practice Scales!</a>
@@ -87,6 +105,11 @@ function Navbar() {
                 <button className="nav-link" onClick={() => {
                     setLoggingIn(true)
                 }}>Login</button>
+                </li>
+                <li className="nav-item">
+                    <button className='nav-link' onClick={() => {
+                        setViewingStats(true)
+                    }}>View Stats</button>
                 </li>
             </ul>
             <span className="navbar-text">
