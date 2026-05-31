@@ -1,17 +1,51 @@
 import { useState } from 'react'
+import { getCurrentUser, fetchUserData, loginUser, createNewUser } from '../api-utils/auth'
+
 
 function Navbar({ currUser, setCurrUser }) {
     const [loggingIn, setLoggingIn] = useState(false)
     const [isRegistering, setIsRegistering] = useState(false)
     const [viewingStats, setViewingStats] = useState(false)
 
+    function handleNewAccount(e) {
+        e.preventDefault();
+        const formData = new FormData(e.currentTarget)
+        const userData = {
+            "username" : formData.get('username'),
+            "email" : formData.get('email'),
+            "pw_hash" : formData.get('password')
+        }
+        createNewUser(userData);
+        setIsRegistering(false)
+
+        // TODO show some message thanking for creating an accound
+    };
+
+    function handleLogin(e) {
+        e.preventDefault();
+
+        const formData = new FormData(e.currentTarget);
+        // loginUser(formData)
+
+        const formPromise = async () => {
+            await loginUser(formData)
+            const currUser = await getCurrentUser()
+            
+            console.log("current user", currentUser)
+            // setLoggingIn(false)
+            // setCurrUser(currUser['username'])
+        }
+        // TODO update navbar to reflect logged in
+        return formPromise()
+    }
+
     const LoginForm = () => {
         return (
             <div className="message-overlay">
             <h3>Login</h3>
-            <form action="" className="d-flex flex-column m-5 gap-3">
-                    <label htmlFor="name">Name</label>
-                    <input type="text" name="name" required/>
+            <form onSubmit={handleLogin} className="d-flex flex-column m-5 gap-3">
+                    <label htmlFor="username">Email</label>
+                    <input type="email" name="username" required/>
 
                     <label htmlFor="password" >Password</label>
                     <input type="password" name="password" required />
@@ -36,20 +70,20 @@ function Navbar({ currUser, setCurrUser }) {
         return (
             <div className="message-overlay">
             <h3>Create an account</h3>
-            <form action="" className="d-flex flex-column m-2 gap-3">
+            <form onSubmit={handleNewAccount} className="d-flex flex-column m-2 gap-3">
 
-                    <label htmlFor="name">Name</label>
-                    <input type="text" name="name" required/>
+                    <label htmlFor="username">Username</label>
+                    <input type="text" name="username" required/>
                
                 
                     <label htmlFor="name">Email</label>
                     <input type="email" name="email" required/>
                
     
-                    <label htmlFor="password" >Password</label>
+                    <label htmlFor="pw_hash">Password</label>
                     <input type="password" name="password" required />
                 
-                <button className="btn btn-light">Create Account</button>
+                <button type="submit" className="btn btn-light">Create Account</button>
             </form>
 
             <div>
@@ -113,7 +147,7 @@ function Navbar({ currUser, setCurrUser }) {
                 </li>
             </ul>
             <span className="navbar-text">
-                welcome, user
+                { currUser ? currUser.toLowerCase() : 'Welcome'}
             </span>
             </div>
         </div>
