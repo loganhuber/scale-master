@@ -20,6 +20,7 @@ function App() {
     const [currCardIndex, setCurrCardIndex] = useState(0)
     const [roundComplete, setRoundComplete] = useState(false)
     const [currUser, setCurrUser] = useState(null)
+    const [userStats, setUserStats] = useState(null)
     
     const currNoteRef = useRef(null)
     const bpmRef = useRef(60)
@@ -34,7 +35,7 @@ function App() {
             }
             try {
                 const userData = await getCurrentUser()
-                
+                setUserStats(userData["scores"])
                 setCurrUser(userData["username"])
             }
             catch (error) {
@@ -50,6 +51,7 @@ function App() {
         <Navbar 
         currUser={currUser} 
         setCurrUser={setCurrUser}
+        userStats={userStats}
         />
         <CountIn 
         count={count}

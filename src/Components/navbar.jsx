@@ -4,26 +4,30 @@ import LoginForm from './forms/loginForm.jsx'
 import RegisterForm from './forms/registerForm.jsx'
 
 
-function Navbar({ currUser, setCurrUser }) {
+function Navbar({ currUser, setCurrUser, userStats }) {
     const [loggingIn, setLoggingIn] = useState(false)
     const [isRegistering, setIsRegistering] = useState(false)
     const [viewingStats, setViewingStats] = useState(false)
 
     function logoutUser() {
-        localStorage.removeItem('access_storage')
+        localStorage.removeItem('access_token')
         setCurrUser(null)
     }
 
-    const UserStats = () => {
+
+    const Stats = () => {
         return (
             <div className="message-overlay">
-                <h2>Stats</h2>
-                <p>user name</p>
+                    <h2>Stats</h2>
+                    <p>{currUser}</p>
                 <ul>
-                    <li>stat 1</li>
-                    <li>stat 1</li>
-                    <li>stat 1</li>
-                    <li>stat 1</li>
+                    {
+                        userStats.map((stat, index) => {
+                           return (
+                             <li key={index} >{stat['score']}% --- {stat['scale_key']} {stat['scale']}</li>
+                           )
+                        })
+                    }
                 </ul>
                 <button className='btn btn-light' onClick={() => {
                     setViewingStats(false)
@@ -31,6 +35,12 @@ function Navbar({ currUser, setCurrUser }) {
             </div>
         )
     }
+
+    useEffect(() => {
+        if (!currUser) setViewingStats(false)
+    }, [viewingStats])
+
+
 
     return (
         <>
@@ -41,7 +51,7 @@ function Navbar({ currUser, setCurrUser }) {
         { isRegistering ? <RegisterForm 
         setIsRegistering={setIsRegistering} 
         /> : ''}
-        { viewingStats ? <UserStats /> : ''}
+        { viewingStats ? <Stats /> : ''}
         <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
             <a className="navbar-brand" href="#">Let's Practice Scales!</a>
@@ -51,11 +61,14 @@ function Navbar({ currUser, setCurrUser }) {
             <div className="collapse navbar-collapse" id="navbarText">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
 
+                { !currUser ?
                 <li className="nav-item">
                 <button className="nav-link" onClick={() => {
                     setIsRegistering(true)
                 }}>Register</button>
-                </li>
+                </li> :
+                ''
+                }
                 <li className="nav-item">
 
                 { currUser ? 
@@ -67,11 +80,14 @@ function Navbar({ currUser, setCurrUser }) {
                 }
 
                 </li>
+                { currUser ? 
                 <li className="nav-item">
                     <button className='nav-link' onClick={() => {
                         setViewingStats(true)
                     }}>View Stats</button>
                 </li>
+                : ''
+                }
             </ul>
             <span className="navbar-text">
                 { currUser ? `Welcome, ${currUser.toLowerCase()}` : 'Welcome'}

@@ -20,7 +20,7 @@ export async function getCurrentUser() {
             return await response.json()
         }
 
-        localStorage.removeItem('token')
+        localStorage.removeItem('access_token')
         return null
     } catch (error) {
         console.error("Error fetching data", error)
@@ -128,5 +128,7 @@ export async function addNewScore(token, scoreData) {
     }
     
 }
+
+
 
 
