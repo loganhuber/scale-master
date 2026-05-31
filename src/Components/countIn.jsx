@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import './index.css'
+import '../index.css'
 
 function CountIn({ count, isPlaying, bpmRef, setIsListening }) {
     const [isShown, setIsShown] = useState(false)

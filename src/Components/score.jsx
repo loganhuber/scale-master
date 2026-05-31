@@ -1,5 +1,5 @@
 import { useState, useEffect, useRe} from 'react'
-import './index.css'
+import '../index.css'
 
 function Score({ roundComplete, currScoreRef }) {
     const [scoreDisplayed, setScoreDisplayed] = useState(false)

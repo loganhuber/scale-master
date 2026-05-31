@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 
 function ScalePicker({ selectedKey, setSelectedKey, selectedScale, setSelectedScale, scales, isPlaying }) {
-
+    const [transposeTo, setTransposeTo] = useState('None')
     const keys = [
         {id : 1 , name : 'C'},
         {id : 2 , name : 'C#'},
@@ -17,6 +17,24 @@ function ScalePicker({ selectedKey, setSelectedKey, selectedScale, setSelectedSc
         {id : 12 , name : 'B'},
     ]
 
+    const transpositions = [
+        {id : 1 , name : 'None'},
+        {id : 2 , name : 'Db'},
+        {id : 3 , name : 'D'},
+        {id : 4 , name : 'Eb'},
+        {id : 5 , name : 'E'},
+        {id : 6 , name : 'F'},
+        {id : 7 , name : 'Gb'},
+        {id : 8 , name : 'G'},
+        {id : 9 , name : 'Ab'},
+        {id : 10 , name : 'A'},
+        {id : 11 , name : 'Bb'},
+        {id : 12 , name : 'B'},
+    ]
+
+    const handleTranspose = (e) => {
+        setTransposeTo(e.target.value)
+    }
     const handleKeys = (e) => {
         setSelectedKey(e.target.value)
     }
@@ -26,6 +44,16 @@ function ScalePicker({ selectedKey, setSelectedKey, selectedScale, setSelectedSc
         <div className="container">
 
             <form className="d-flex flex-column align-items-center gap-1" action=''>
+                <div className="w-25">
+                <label className="mx-2" htmlFor="keys">Need to transpose? </label>
+                    <select className='' disabled={isPlaying} name="keys" id="keys" value={transposeTo} onChange={handleTranspose}>
+                    {transpositions.map((key) => {
+                        return (
+                            <option key={key.name} id={key.id} value={key.name}>{key.name}</option>
+                        )
+                    })}
+                    </select>
+                </div>
                 <div className="w-25">
                 <label className="mx-2" htmlFor="keys">Key: </label>
                     <select className='' disabled={isPlaying} name="keys" id="keys" value={selectedKey} onChange={handleKeys}>

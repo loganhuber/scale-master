@@ -1,10 +1,11 @@
 import { useState, useRef } from 'react'
-import Microphone from './microphone.jsx'
-import ScalePicker from './scalePicker.jsx'
-import Metronome from './metronome.jsx'
-import ScaleDisplay from './scaleDisplay.jsx'
-import CountIn from './countIn.jsx'
-import Score from './score.jsx'
+import Microphone from './Components/microphone.jsx'
+import ScalePicker from './Components/scalePicker.jsx'
+import Metronome from './Components/metronome.jsx'
+import ScaleDisplay from './Components/scaleDisplay.jsx'
+import CountIn from './Components/countIn.jsx'
+import Score from './Components/score.jsx'
+import Navbar from './Components/navbar.jsx'
 
 const scales = {
     major: { 
@@ -80,6 +81,7 @@ function App() {
     const [count, setCount] = useState(null)
     const [currCardIndex, setCurrCardIndex] = useState(0)
     const [roundComplete, setRoundComplete] = useState(false)
+    const [currUser, setCurrUser] = useState(null)
     
     const currNoteRef = useRef(null)
     const bpmRef = useRef(60)
@@ -87,6 +89,10 @@ function App() {
 
     return (
         <>
+        <Navbar 
+        currUser={currUser} 
+        setCurrUser={setCurrUser}
+        />
         <CountIn 
         count={count}
         isPlaying={isPlaying}

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-function Navbar() {
+function Navbar({ currUser, setCurrUser }) {
     const [loggingIn, setLoggingIn] = useState(false)
     const [isRegistering, setIsRegistering] = useState(false)
     const [viewingStats, setViewingStats] = useState(false)
