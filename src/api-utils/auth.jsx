@@ -9,8 +9,9 @@ export async function getCurrentUser() {
     if (fetchPromise) return fetchPromise
 
     const token = localStorage.getItem('access_token')
+    
     if (!token) return null
-
+    
     fetchPromise = (async () => {
     try {
         const response = await fetch(`${userUrlBase}/me`, { headers : { "Authorization": `Bearer ${token}` }})
@@ -36,17 +37,11 @@ export async function getCurrentUser() {
 export async function loginUser(formData) {
     const url = `${userUrlBase}/token`
 
-    // // change this later to get a form object from the login form
-    // const formData = new FormData()
-    // formData.append("username", "cjhuber102@gmail.com")
-    // formData.append("password", "password")
-
     const response = await fetch(url, {method: 'POST', body : formData})
     if (response.ok) {
         const data = await response.json()
-
-        // console.log("Token:", data.access_token)
         localStorage.setItem('access_token', data.access_token)
+        // console.log("Successful Login", data.access_token)
         return data.access_token
     }
     else {
@@ -67,7 +62,7 @@ export async function fetchUserData(id) {
     }
     
     const data = await response.json();
-    console.log('User Data:', data);
+    // console.log('User Data:', data);
     return data
   } catch (error) {
     console.error('Failed to fetch:', error.message);
@@ -133,3 +128,5 @@ export async function addNewScore(token, scoreData) {
     }
     
 }
+
+
