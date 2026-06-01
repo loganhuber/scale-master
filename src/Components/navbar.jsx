@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react'
-import { getCurrentUser, fetchUserData } from '../api-utils/auth'
+import { getCurrentUser, fetchUserData } from '../context/auth.jsx'
 import LoginForm from './forms/loginForm.jsx'
 import RegisterForm from './forms/registerForm.jsx'
 import { AuthContext } from '../context/AuthContext.jsx'
@@ -18,6 +18,10 @@ function Navbar() {
         setCurrUser(null)
     }
 
+    useEffect(() => {
+        console.log("User Stats: ", userStats)
+    }, [])
+
 
     const Stats = () => {
         return (
@@ -25,12 +29,14 @@ function Navbar() {
                     <h2>Stats</h2>
                     <p>{currUser}</p>
                 <ul>
-                    {
+                    { userStats?.length ?
                         userStats.map((stat, index) => {
                            return (
                              <li key={index} >{stat['score']}% --- {stat['scale_key']} {stat['scale']}</li>
                            )
                         })
+                        :
+                        <li>No Stats Yet</li>
                     }
                 </ul>
                 <button className='btn btn-light' onClick={() => {

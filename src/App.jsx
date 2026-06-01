@@ -1,4 +1,8 @@
 import { useState, useRef, useEffect, useContext } from 'react'
+import { getCurrentUser } from './context/auth.jsx'
+import { scales } from './globalVars.js'
+import { AuthContext } from './context/AuthContext.jsx'
+
 import Microphone from './Components/microphone.jsx'
 import ScalePicker from './Components/scalePicker.jsx'
 import Metronome from './Components/metronome.jsx'
@@ -6,12 +10,6 @@ import ScaleDisplay from './Components/scaleDisplay.jsx'
 import CountIn from './Components/countIn.jsx'
 import Score from './Components/score.jsx'
 import Navbar from './Components/navbar.jsx'
-
-import { getCurrentUser } from './api-utils/auth.jsx'
-import { scales } from './globalVars.js'
-
-import { AuthContext } from './context/AuthContext.jsx'
-
 
 function App() {
     const [selectedKey, setSelectedKey] = useState('C')
@@ -21,34 +19,11 @@ function App() {
     const [count, setCount] = useState(null)
     const [currCardIndex, setCurrCardIndex] = useState(0)
     const [roundComplete, setRoundComplete] = useState(false)
-    // const [currUser, setCurrUser] = useState(null)
-    // const [userStats, setUserStats] = useState(null)
     
     const currNoteRef = useRef(null)
     const bpmRef = useRef(60)
     const currScoreRef = useRef([])
 
-    const { currUser, setCurrUser, setUserStats } = useContext(AuthContext)
-
-    useEffect(() => {
-        const token = localStorage.getItem('access_token')
-        async function loadUser() {
-            if (!token) {
-                setCurrUser(null)
-                return
-            }
-            try {
-                const userData = await getCurrentUser()
-                setUserStats(userData["scores"])
-                setCurrUser(userData["username"])
-            }
-            catch (error) {
-                console.log("Error fetching current user", error)
-                setCurrUser(null)
-            }
-        }
-        loadUser()
-    }, [])
 
     return (
         <>
@@ -63,6 +38,8 @@ function App() {
         <Score 
         roundComplete={roundComplete}
         currScoreRef={currScoreRef}
+        selectedKey={selectedKey}
+        selectedScale={selectedScale}
         />
 
         <Microphone isListening={isListening}

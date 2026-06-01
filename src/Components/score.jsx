@@ -1,7 +1,9 @@
-import { useState, useEffect, useRe} from 'react'
+import { useState, useEffect} from 'react'
+import { addNewScore } from '../context/auth'
 import '../index.css'
 
-function Score({ roundComplete, currScoreRef }) {
+
+function Score({ roundComplete, currScoreRef, selectedKey, selectedScale }) {
     const [scoreDisplayed, setScoreDisplayed] = useState(false)
     const [score, setScore] = useState(0)
     const [critique, setCritique] = useState(null)
@@ -32,6 +34,25 @@ function Score({ roundComplete, currScoreRef }) {
         return pickMsg(sucked)
     }
 
+    async function pushScore() {
+        const token = localStorage.getItem('access_token')
+        if (!token) return;
+
+        const scoreData = {
+            "score" : score,
+            "scale" : selectedScale,
+            "scale_key" : selectedKey
+        }
+
+        try {
+            // TODO take addNewScore response and use it to update the UI
+            await addNewScore(token, scoreData)
+            // console.log("New Score", newScore)
+        } catch (error) {
+            console.log("Error pushing new score", error)
+        }
+    }
+
 
     useEffect(() => {
         if (!roundComplete) return;
@@ -43,6 +64,7 @@ function Score({ roundComplete, currScoreRef }) {
         setCritique(critique)
         currScoreRef.current = []
         setScoreDisplayed(true)
+        pushScore()
     }, [roundComplete])
 
     return (

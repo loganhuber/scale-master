@@ -86,6 +86,7 @@ function Microphone({ isListening, currNoteRef }) {
     function stopListening() {
         clearTimeout(timeoutRef.current)
         audioContextRef.current?.close()
+        audioContextRef.current = null
         streamRef.current?.getTracks().forEach((track) => track.stop())
         setPitch(null)
         setClarity(null)
@@ -96,6 +97,7 @@ function Microphone({ isListening, currNoteRef }) {
         return () => {
             clearTimeout(timeoutRef.current)
             audioContextRef.current?.close()
+            audioContextRef.current = null
         }
     }, [])
 

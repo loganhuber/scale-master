@@ -1,4 +1,4 @@
-import { createNewUser } from "../../api-utils/auth";
+import { createNewUser } from "../../context/auth";
 
 function RegisterForm({ setIsRegistering }) {
 

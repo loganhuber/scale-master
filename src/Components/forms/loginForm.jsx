@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { loginUser, getCurrentUser } from "../../api-utils/auth";
+import { loginUser, getCurrentUser } from "../../context/auth";
 import { AuthContext } from "../../context/AuthContext";
 function LoginForm({ setIsRegistering, setLoggingIn }) {
     const { currUser, setCurrUser } = useContext(AuthContext)

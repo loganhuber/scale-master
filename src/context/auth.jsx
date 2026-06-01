@@ -112,6 +112,7 @@ export async function addNewScore(token, scoreData) {
     }
     else {
         const data = response.json()
-        console.log("Added Score", response)
+        console.log("Added Score", data)
+        return response
     }
 }
