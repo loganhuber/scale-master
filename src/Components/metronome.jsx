@@ -94,7 +94,8 @@ function Metronome( { setIsListening, count, setCount, isPlaying, setIsPlaying, 
 
 
     return (
-        <div className="container text-center">
+        <div className="container">
+            <h2>Pick BPM</h2>
             <label htmlFor="bpm">BPM: {bpm}</label>
             <input disabled={isPlaying} type="range" id="bpm" name="bpm" min="50" max="200" value={bpm} step="1" onChange={adjustBpm}></input>
             <div>COUNT: {count ?? '-'}</div>

@@ -42,9 +42,9 @@ function ScalePicker({ selectedKey, setSelectedKey, selectedScale, setSelectedSc
 
     return (
         <div className="container">
-
-            <form className="d-flex flex-column align-items-center gap-1" action=''>
-                <div className="w-25">
+            <h2 className='text-end'>Pick a Scale</h2>
+            <form className="d-flex flex-column align-items-end gap-1" action=''>
+                <div className="">
                 <label className="mx-2" htmlFor="keys">Need to transpose? </label>
                     <select className='' disabled={isPlaying} name="keys" id="keys" value={transposeTo} onChange={handleTranspose}>
                     {transpositions.map((key) => {
@@ -54,7 +54,7 @@ function ScalePicker({ selectedKey, setSelectedKey, selectedScale, setSelectedSc
                     })}
                     </select>
                 </div>
-                <div className="w-25">
+                <div className="">
                 <label className="mx-2" htmlFor="keys">Key: </label>
                     <select className='' disabled={isPlaying} name="keys" id="keys" value={selectedKey} onChange={handleKeys}>
                     {keys.map((key) => {
@@ -65,7 +65,7 @@ function ScalePicker({ selectedKey, setSelectedKey, selectedScale, setSelectedSc
                     </select>
                 </div>
 
-                <div className="w-25">
+                <div className="">
                 <label className="mx-2" htmlFor="scale">Scale
                 </label>
                 <select className="" disabled={isPlaying} name="scale" id="scale" value={selectedScale} onChange={(e) => setSelectedScale(e.target.value)}>

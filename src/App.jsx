@@ -46,17 +46,9 @@ function App() {
         currNoteRef={currNoteRef}
             />
 
-        <div className="container-fluid">
+        <div className="container w-50">
             <div className="row">
-                <div className="col-6">
-                    <ScalePicker selectedKey={selectedKey}
-                        setSelectedKey={setSelectedKey}
-                        selectedScale={selectedScale}
-                        setSelectedScale={setSelectedScale}
-                        scales={scales}
-                        isPlaying={isPlaying}
-                        />
-                </div>
+
                 <div className="col-6">
                     <Metronome
                     setIsListening={setIsListening}
@@ -67,6 +59,15 @@ function App() {
                     bpmRef={bpmRef}
                     roundComplete={roundComplete}
                     setRoundComplete={setRoundComplete}
+                        />
+                </div>
+                <div className="col-6">
+                    <ScalePicker selectedKey={selectedKey}
+                        setSelectedKey={setSelectedKey}
+                        selectedScale={selectedScale}
+                        setSelectedScale={setSelectedScale}
+                        scales={scales}
+                        isPlaying={isPlaying}
                         />
                 </div>
             </div>

@@ -1,12 +1,14 @@
-import { useState, useEffect} from 'react'
+import { useState, useEffect, useContext} from 'react'
 import { addNewScore } from '../context/auth'
 import '../index.css'
-
+import { AuthContext } from '../context/AuthContext'
 
 function Score({ roundComplete, currScoreRef, selectedKey, selectedScale }) {
     const [scoreDisplayed, setScoreDisplayed] = useState(false)
     const [score, setScore] = useState(0)
     const [critique, setCritique] = useState(null)
+
+    const { currUser } = useContext(AuthContext)
 
     function calculateScore(notes) {
         let correctNotes = 0;
@@ -64,7 +66,7 @@ function Score({ roundComplete, currScoreRef, selectedKey, selectedScale }) {
         setCritique(critique)
         currScoreRef.current = []
         setScoreDisplayed(true)
-        pushScore()
+        if (currUser) pushScore()
     }, [roundComplete])
 
     return (
