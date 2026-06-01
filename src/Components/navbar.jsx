@@ -1,16 +1,20 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { getCurrentUser, fetchUserData } from '../api-utils/auth'
 import LoginForm from './forms/loginForm.jsx'
 import RegisterForm from './forms/registerForm.jsx'
+import { AuthContext } from '../context/AuthContext.jsx'
 
 
-function Navbar({ currUser, setCurrUser, userStats }) {
+function Navbar() {
     const [loggingIn, setLoggingIn] = useState(false)
     const [isRegistering, setIsRegistering] = useState(false)
     const [viewingStats, setViewingStats] = useState(false)
 
+    const { currUser, setCurrUser, userStats, setUserStats } = useContext(AuthContext)
+
     function logoutUser() {
         localStorage.removeItem('access_token')
+        setUserStats(null)
         setCurrUser(null)
     }
 

@@ -32,7 +32,6 @@ export async function getCurrentUser() {
     return fetchPromise
 }
 
-
 // pass in converted formData() object
 export async function loginUser(formData) {
     const url = `${userUrlBase}/token`
@@ -50,7 +49,6 @@ export async function loginUser(formData) {
         }
 }
 
-
 export async function fetchUserData(id) {
   const url = `${userUrlBase}/${id}`;
   
@@ -62,7 +60,6 @@ export async function fetchUserData(id) {
     }
     
     const data = await response.json();
-    // console.log('User Data:', data);
     return data
   } catch (error) {
     console.error('Failed to fetch:', error.message);
@@ -96,16 +93,7 @@ export async function createNewUser(userData) {
     console.log("New User:", newUser)
 }
 
-
-// TODO check and make sure date is optional
 // Remember to get data.access_token and not the entire token object
-// score data example:
-    // const scoreData = {
-    //     "score": 0,
-    //     "date": "2026-05-30T21:55:15.407Z",
-    //     "scale": "C",
-    //     "scale_key": "Minor"
-    // }
 export async function addNewScore(token, scoreData) {
     const url = scoresUrlBase
 
@@ -126,9 +114,4 @@ export async function addNewScore(token, scoreData) {
         const data = response.json()
         console.log("Added Score", response)
     }
-    
 }
-
-
-
-

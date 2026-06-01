@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useContext } from 'react'
 import Microphone from './Components/microphone.jsx'
 import ScalePicker from './Components/scalePicker.jsx'
 import Metronome from './Components/metronome.jsx'
@@ -10,6 +10,8 @@ import Navbar from './Components/navbar.jsx'
 import { getCurrentUser } from './api-utils/auth.jsx'
 import { scales } from './globalVars.js'
 
+import { AuthContext } from './context/AuthContext.jsx'
+
 
 function App() {
     const [selectedKey, setSelectedKey] = useState('C')
@@ -19,12 +21,14 @@ function App() {
     const [count, setCount] = useState(null)
     const [currCardIndex, setCurrCardIndex] = useState(0)
     const [roundComplete, setRoundComplete] = useState(false)
-    const [currUser, setCurrUser] = useState(null)
-    const [userStats, setUserStats] = useState(null)
+    // const [currUser, setCurrUser] = useState(null)
+    // const [userStats, setUserStats] = useState(null)
     
     const currNoteRef = useRef(null)
     const bpmRef = useRef(60)
     const currScoreRef = useRef([])
+
+    const { currUser, setCurrUser, setUserStats } = useContext(AuthContext)
 
     useEffect(() => {
         const token = localStorage.getItem('access_token')
@@ -49,9 +53,6 @@ function App() {
     return (
         <>
         <Navbar 
-        currUser={currUser} 
-        setCurrUser={setCurrUser}
-        userStats={userStats}
         />
         <CountIn 
         count={count}

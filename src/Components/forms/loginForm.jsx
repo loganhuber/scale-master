@@ -1,5 +1,8 @@
+import { useContext } from "react";
 import { loginUser, getCurrentUser } from "../../api-utils/auth";
-function LoginForm({ setIsRegistering, setLoggingIn, setCurrUser}) {
+import { AuthContext } from "../../context/AuthContext";
+function LoginForm({ setIsRegistering, setLoggingIn }) {
+    const { currUser, setCurrUser } = useContext(AuthContext)
 
         function handleLogin(e) {
         e.preventDefault();
