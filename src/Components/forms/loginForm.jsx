@@ -1,33 +1,41 @@
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { loginUser, getCurrentUser, getUserScores } from "../../context/auth";
 import { AuthContext } from "../../context/AuthContext";
 function LoginForm({ setIsRegistering, setLoggingIn }) {
     const { currUser, setCurrUser, setUserStats } = useContext(AuthContext)
+    const [error, setError] = useState(null)
 
-        function handleLogin(e) {
+        async function handleLogin(e) {
         e.preventDefault();
 
         const formData = new FormData(e.currentTarget);
-        // loginUser(formData)
 
-        const formPromise = async () => {
+        try {
             await loginUser(formData)
             const currUser = await getCurrentUser()
-            console.log("current user", currUser['username'])
-            const userScores = await getUserScores(currUser["id"])
+            console.log("Current User: ", currUser)
+            const userScores = await getCurrentUser(currUser["id"])
 
-            
-            setCurrUser(currUser['username'])
+            setCurrUser(currUser["username"])
             setUserStats(userScores)
+            setLoggingIn(false)
         }
-        // TODO update navbar to reflect logged in
-        setLoggingIn(false)
-        return formPromise()
+        catch (error) {
+            setError(error.message)
+        }
     }
+
+    useEffect(() => {
+        setError(null)
+    }, [])
+
     return (
         <div className="message-overlay">
         <h3>Login</h3>
         <form onSubmit={handleLogin} className="d-flex flex-column m-5 gap-3">
+                { error && 
+                <div className="">{error}</div>
+                }
                 <label htmlFor="username">Email</label>
                 <input type="email" name="username" required/>
 

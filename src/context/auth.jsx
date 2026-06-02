@@ -37,16 +37,28 @@ export async function loginUser(formData) {
     const url = `${userUrlBase}/token`
 
     const response = await fetch(url, {method: 'POST', body : formData})
-    if (response.ok) {
-        const data = await response.json()
-        localStorage.setItem('access_token', data.access_token)
-        // console.log("Successful Login", data.access_token)
-        return data.access_token
+    if (!response.ok) {
+        const error = await response.json()
+        console.log("Error", error.detail)
+        throw new Error(error.detail)
+        
     }
-    else {
-        const error = await response.json();
-        console.log(`Error: ${getErrorMessage(error)}`)
-        }
+
+    const data = await response.json()
+    localStorage.setItem('access_token', data.access_token)
+    console.log("Successful Login")
+    return data.access_token
+    // if (response.ok) {
+    //     const data = await response.json()
+    //     localStorage.setItem('access_token', data.access_token)
+    //     // console.log("Successful Login", data.access_token)
+    //     return data.access_token
+    // }
+    // else {
+    //     const error = await response.json();
+    //     return error.detail
+    //     console.log(`Error: ${getErrorMessage(error)}`)
+    //     }
 }
 
 export async function fetchUserData(id) {
