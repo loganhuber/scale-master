@@ -3,7 +3,7 @@ import { addNewScore } from '../context/auth'
 import '../index.css'
 import { AuthContext } from '../context/AuthContext'
 
-function Score({ roundComplete, currScoreRef, selectedKey, selectedScale, bpmRef }) {
+function Score({ roundComplete, currScoreRef, selectedKey, selectedScale, bpmRef, setRestart }) {
     const [scoreDisplayed, setScoreDisplayed] = useState(false)
     const [score, setScore] = useState(0)
     const [critique, setCritique] = useState(null)
@@ -83,11 +83,17 @@ function Score({ roundComplete, currScoreRef, selectedKey, selectedScale, bpmRef
                         <h2>Score: {score}%</h2>
                     </div>
                     <div className="row d-flex justify-content-center gap-2">
-                    <button className="btn btn-light col-1">Go Again</button>
+                    <button className="btn btn-light col-1" onClick={
+                        () => {
+                            setRestart(true)
+                            setScoreDisplayed(false)
+                        }}
+                    >Go Again</button>
                     <button className="btn btn-light col-1"
-                    onClick={
-                        () => {setScoreDisplayed(false)}
-                    }
+                    onClick={() => {
+                        setScoreDisplayed(false)
+                    }}
+                    
                     >Close</button>
                     </div>
 

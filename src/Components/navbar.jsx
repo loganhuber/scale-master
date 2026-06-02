@@ -100,7 +100,7 @@ function Navbar() {
                 }
             </ul>
             <span className="navbar-text">
-                { currUser ? `Welcome, ${currUser.toLowerCase()}` : 'Welcome'}
+                { currUser ? `Welcome, ${currUser.toLowerCase()}` : 'Welcome, Guest'}
             </span>
             </div>
         </div>
