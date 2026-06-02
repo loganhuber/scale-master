@@ -116,3 +116,20 @@ export async function addNewScore(token, scoreData) {
         return response
     }
 }
+
+
+export async function getUserScores(userId) {
+    const url = `${scoresUrlBase}/${userId}/scores`
+
+    const response = await fetch(url, {method : "GET"})
+
+    if (!response.ok) {
+        const error = await response.json()
+        console.log("Error", error)
+    }
+    else {
+        const scoreData = response.json()
+        return scoreData
+    }
+
+}

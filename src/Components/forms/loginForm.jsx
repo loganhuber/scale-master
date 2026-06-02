@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import { loginUser, getCurrentUser } from "../../context/auth";
+import { loginUser, getCurrentUser, getUserScores } from "../../context/auth";
 import { AuthContext } from "../../context/AuthContext";
 function LoginForm({ setIsRegistering, setLoggingIn }) {
-    const { currUser, setCurrUser } = useContext(AuthContext)
+    const { currUser, setCurrUser, setUserStats } = useContext(AuthContext)
 
         function handleLogin(e) {
         e.preventDefault();
@@ -13,10 +13,12 @@ function LoginForm({ setIsRegistering, setLoggingIn }) {
         const formPromise = async () => {
             await loginUser(formData)
             const currUser = await getCurrentUser()
-            
             console.log("current user", currUser['username'])
-            // setLoggingIn(false)
+            const userScores = await getUserScores(currUser["id"])
+
+            
             setCurrUser(currUser['username'])
+            setUserStats(userScores)
         }
         // TODO update navbar to reflect logged in
         setLoggingIn(false)

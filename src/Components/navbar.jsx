@@ -32,7 +32,7 @@ function Navbar() {
                     { userStats?.length ?
                         userStats.map((stat, index) => {
                            return (
-                             <li key={index} >{stat['score']}% --- {stat['scale_key']} {stat['scale']}</li>
+                             <li key={index} >{stat['score']}% --- {stat['scale_key']} {stat['scale']} --- {stat['bpm']} BPM</li>
                            )
                         })
                         :

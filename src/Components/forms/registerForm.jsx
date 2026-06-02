@@ -13,7 +13,7 @@ function RegisterForm({ setIsRegistering }) {
         createNewUser(userData);
         setIsRegistering(false)
 
-        // TODO show some message thanking for creating an accound
+        // TODO show some message thanking for creating an account
     };
 
     return (
@@ -29,7 +29,7 @@ function RegisterForm({ setIsRegistering }) {
                 <input type="email" name="email" required/>
             
 
-                <label htmlFor="pw_hash">Password</label>
+                <label htmlFor="password">Password</label>
                 <input type="password" name="password" required />
             
             <button type="submit" className="btn btn-light">Create Account</button>

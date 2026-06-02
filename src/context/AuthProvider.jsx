@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { AuthContext } from "./AuthContext";
 
-import { getCurrentUser } from "./auth";
+import { getCurrentUser, getUserScores } from "./auth";
 
 export function AuthProvider({ children }) {
     const [currUser, setCurrUser] = useState(null);
@@ -16,8 +16,8 @@ export function AuthProvider({ children }) {
         }
         try {
             const userData = await getCurrentUser()
-            
-            setUserStats(userData["scores"])
+            const userScores = await getUserScores(userData['id'])
+            setUserStats(userScores)
             setCurrUser(userData["username"])
         }
         catch (error) {
@@ -27,6 +27,10 @@ export function AuthProvider({ children }) {
     }
     loadUser()
 }, [])
+
+    useEffect(() => {
+        console.log(userStats)
+    }, [])
 
     return (
         <AuthContext.Provider

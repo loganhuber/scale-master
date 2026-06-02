@@ -40,6 +40,7 @@ function App() {
         currScoreRef={currScoreRef}
         selectedKey={selectedKey}
         selectedScale={selectedScale}
+        bpmRef={bpmRef}
         />
 
         <Microphone isListening={isListening}

@@ -3,7 +3,7 @@ import { addNewScore } from '../context/auth'
 import '../index.css'
 import { AuthContext } from '../context/AuthContext'
 
-function Score({ roundComplete, currScoreRef, selectedKey, selectedScale }) {
+function Score({ roundComplete, currScoreRef, selectedKey, selectedScale, bpmRef }) {
     const [scoreDisplayed, setScoreDisplayed] = useState(false)
     const [score, setScore] = useState(0)
     const [critique, setCritique] = useState(null)
@@ -36,14 +36,15 @@ function Score({ roundComplete, currScoreRef, selectedKey, selectedScale }) {
         return pickMsg(sucked)
     }
 
-    async function pushScore() {
+    async function pushScore(scorePercentage) {
         const token = localStorage.getItem('access_token')
         if (!token) return;
 
         const scoreData = {
-            "score" : score,
+            "score" : scorePercentage,
             "scale" : selectedScale,
-            "scale_key" : selectedKey
+            "scale_key" : selectedKey,
+            "bpm" : bpmRef.current
         }
 
         try {
@@ -66,7 +67,7 @@ function Score({ roundComplete, currScoreRef, selectedKey, selectedScale }) {
         setCritique(critique)
         currScoreRef.current = []
         setScoreDisplayed(true)
-        if (currUser) pushScore()
+        if (currUser) pushScore(scorePercentage) 
     }, [roundComplete])
 
     return (
