@@ -10,6 +10,7 @@ import ScaleDisplay from './Components/scaleDisplay.jsx'
 import CountIn from './Components/countIn.jsx'
 import Score from './Components/score.jsx'
 import Navbar from './Components/navbar.jsx'
+import MixItUp from './Components/mixItUp.jsx'
 
 function App() {
     const [selectedKey, setSelectedKey] = useState('C')
@@ -34,7 +35,9 @@ function App() {
         count={count}
         isPlaying={isPlaying}
         bpmRef={bpmRef}
-        setIsListening={setIsListening} />
+        setIsListening={setIsListening}
+        selectedKey={selectedKey}
+        selectedScale={selectedScale} />
 
         <Score 
         roundComplete={roundComplete}
@@ -91,7 +94,9 @@ function App() {
         setRoundComplete={setRoundComplete}
         currScoreRef={currScoreRef}
         />
-
+        { !isPlaying && 
+        <MixItUp />
+        }
         </>
     )
 }

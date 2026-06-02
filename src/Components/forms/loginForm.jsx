@@ -34,7 +34,7 @@ function LoginForm({ setIsRegistering, setLoggingIn }) {
         <h3>Login</h3>
         <form onSubmit={handleLogin} className="d-flex flex-column m-5 gap-3">
                 { error && 
-                <div className="">{error}</div>
+                <div className="alert alert-danger">{error}</div>
                 }
                 <label htmlFor="username">Email</label>
                 <input type="email" name="username" required/>
