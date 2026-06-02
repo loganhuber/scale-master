@@ -95,7 +95,10 @@ function App() {
         currScoreRef={currScoreRef}
         />
         { !isPlaying && 
-        <MixItUp />
+        <MixItUp 
+        setSelectedKey={setSelectedKey}
+        setSelectedScale={setSelectedScale}
+        />
         }
         </>
     )

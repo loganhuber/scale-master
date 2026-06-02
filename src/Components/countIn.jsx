@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import '../index.css'
+import { scales } from '../globalVars'
 
 function CountIn({ count, isPlaying, bpmRef, setIsListening, selectedKey, selectedScale }) {
     const [isShown, setIsShown] = useState(false)
@@ -31,7 +32,7 @@ function CountIn({ count, isPlaying, bpmRef, setIsListening, selectedKey, select
             {isShown ?
                 (
                 <div className="message-overlay">
-                    <h1>{selectedKey} {selectedScale}</h1>
+                    <h1>{selectedKey} {scales[selectedScale]["name"]}</h1>
                     <h2 className="Display-1">Ready in...</h2>
                     <div className="count-number">{count}</div>
                 </div>

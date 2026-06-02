@@ -73,7 +73,8 @@ function Navbar() {
 
                 { !currUser ?
                 <li className="nav-item">
-                <button className="nav-link" onClick={() => {
+                <button className="nav-link" data-bs-toggle="tooltip" data-bs-placement="top" title="Want to keep track of your scores? Register now!"
+                onClick={() => {
                     setIsRegistering(true)
                 }}>Register</button>
                 </li> :
