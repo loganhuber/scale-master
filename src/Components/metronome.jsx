@@ -1,7 +1,7 @@
 
 import { useState, useRef, useEffect } from 'react'
 
-function Metronome( { setIsListening, count, setCount, isPlaying, setIsPlaying, bpmRef, roundComplete, setRoundComplete, restart, setRestart }) {
+function Metronome( { setIsListening, count, setCount, isPlaying, setIsPlaying, bpmRef, roundComplete, setRoundComplete, restart, setRestart, scheduleInProgress }) {
     const [bpm, setBpm] = useState(60)
     const audioRef = useRef(null)
     const startTimeRef = useRef(null)
@@ -30,7 +30,7 @@ function Metronome( { setIsListening, count, setCount, isPlaying, setIsPlaying, 
     
     const secondsPerBeat = 60 / bpmRef.current
     function start() {
-        setIsPlaying(prev => !prev)
+        setIsPlaying(true)
         if (!audioRef.current) {
             audioRef.current = new AudioContext()
         }
@@ -86,10 +86,21 @@ function Metronome( { setIsListening, count, setCount, isPlaying, setIsPlaying, 
     }
 
     useEffect(() => {
-        if (!roundComplete) return;
+        if (!isPlaying) {
+            if (frameRef.current) {
+                cancelAnimationFrame(frameRef.current)
+            }
+            setCount(null)
+            setIsListening(false)
+            return
+        }
+    }, [isPlaying, setIsListening])
 
-        stop();
-        setRoundComplete(false);
+    useEffect(() => {
+        if (!roundComplete) return
+
+        stop()
+        setRoundComplete(false)
     }, [roundComplete, setRoundComplete])
 
     useEffect(() => {

@@ -1,13 +1,12 @@
 import { scales } from "../globalVars"
 import { useEffect } from "react"
-function MixItUp({ setSelectedScale, setSelectedKey, scaleSchedule, setScaleSchedule }) {
+function MixItUp({ startMixSchedule, scheduleInProgress }) {
 
     function randomIndex(max) {
         return Math.floor(Math.random() * max)
     }
 
     function setRandomScales() {
-        
         let schedule = []
         for (let i = 0; i < 4; i++) {
             const chromatic = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
@@ -22,14 +21,12 @@ function MixItUp({ setSelectedScale, setSelectedKey, scaleSchedule, setScaleSche
                 scale : newScale
             })
         }
-        setScaleSchedule(schedule)
-        // setSelectedKey(chromatic[keyIndex])
-        // setSelectedScale(newScale)
+        startMixSchedule(schedule)
     }
 
-    useEffect(() => {
-        console.log(scaleSchedule)
-    }, [scaleSchedule])
+    // useEffect(() => {
+    //     console.log(scaleSchedule)
+    // }, [scaleSchedule])
 
     return (
         <div className="d-flex justify-content-center">

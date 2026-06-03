@@ -3,7 +3,7 @@ import { addNewScore } from '../context/auth'
 import '../index.css'
 import { AuthContext } from '../context/AuthContext'
 
-function Score({ roundComplete, currScoreRef, selectedKey, selectedScale, bpmRef, setRestart }) {
+function Score({ roundComplete, scheduleComplete, scheduleInProgress, currScoreRef, selectedKey, selectedScale, bpmRef, setRestart }) {
     const [scoreDisplayed, setScoreDisplayed] = useState(false)
     const [score, setScore] = useState(0)
     const [critique, setCritique] = useState(null)
@@ -11,6 +11,7 @@ function Score({ roundComplete, currScoreRef, selectedKey, selectedScale, bpmRef
     const { currUser } = useContext(AuthContext)
 
     function calculateScore(notes) {
+        if (!notes.length) return 0
         let correctNotes = 0;
         notes.forEach((note) => {
             if (note === true) correctNotes++
@@ -58,7 +59,8 @@ function Score({ roundComplete, currScoreRef, selectedKey, selectedScale, bpmRef
 
 
     useEffect(() => {
-        if (!roundComplete) return;
+        if (scheduleInProgress) return;
+        if (!roundComplete && !scheduleComplete) return;
 
         const scorePercentage = calculateScore(currScoreRef.current)
         const critique = getCritique(scorePercentage)
@@ -68,7 +70,7 @@ function Score({ roundComplete, currScoreRef, selectedKey, selectedScale, bpmRef
         currScoreRef.current = []
         setScoreDisplayed(true)
         if (currUser) pushScore(scorePercentage) 
-    }, [roundComplete])
+    }, [roundComplete, scheduleComplete, scheduleInProgress])
 
     return (
         <>

@@ -2,29 +2,30 @@ import { useState, useEffect, useRef } from 'react'
 import '../index.css'
 import { scales } from '../globalVars'
 
-function CountIn({ count, isPlaying, bpmRef, setIsListening, selectedKey, selectedScale }) {
+function CountIn({ count, isPlaying, setIsListening, selectedKey, selectedScale }) {
     const [isShown, setIsShown] = useState(false)
     const [countInComplete, setCountInComplete] = useState(false)
+    const prevCountRef = useRef(null)
 
     useEffect(() => {
-        if (countInComplete) return;
-        if (count == 4) {
-            setTimeout(() => {
-                setCountInComplete(true)
-                setIsShown(false)
-                setIsListening(true)
-            }, 60000 / bpmRef.current)
+        if (countInComplete) return
+        if (prevCountRef.current === 4 && count === 1) {
+            setCountInComplete(true)
+            setIsShown(false)
+            setIsListening(true)
         }
-
-    }, [count])
-
+        prevCountRef.current = count
+    }, [count, countInComplete, setIsListening])
 
     useEffect(() => {
         if (isPlaying) {
-            setIsShown(true);
+            setIsShown(true)
             setCountInComplete(false)
+            prevCountRef.current = null
         }
     }, [isPlaying])
+
+
 
     
     return (

@@ -21,12 +21,67 @@ function App() {
     const [currCardIndex, setCurrCardIndex] = useState(0)
     const [roundComplete, setRoundComplete] = useState(false)
     const [restart, setRestart] = useState(false) // Use to call start() function in metronome from the score component
-    const [scaleSchedule, setScaleSchedule] = useState([])
     
     const currNoteRef = useRef(null)
     const bpmRef = useRef(60)
     const currScoreRef = useRef([])
 
+    // mix it up scheduler
+    const [scaleSchedule, setScaleSchedule] = useState([])
+    const [currentScheduleIndex, setCurrentScheduleIndex] = useState(0)
+    const [scheduleInProgress, setScheduleInProgress] = useState(false)
+    const [scheduleComplete, setScheduleComplete] = useState(false)
+
+    function startMixSchedule(schedule) {
+        setScaleSchedule(schedule)
+        setCurrentScheduleIndex(0)
+        setScheduleInProgress(true)
+        setScheduleComplete(false)
+        currScoreRef.current = []
+        setRoundComplete(false)
+        setIsListening(false)
+        setIsPlaying(false)
+        setCount(null)
+        setCurrCardIndex(0)
+    }
+
+    useEffect(() => {
+        if (!scheduleInProgress || !scaleSchedule.length) return
+
+        const { key, scale } = scaleSchedule[currentScheduleIndex]
+        setSelectedKey(key)
+        setSelectedScale(scale)
+        setIsListening(false)
+        setCount(null)
+        setCurrCardIndex(0)
+        setRoundComplete(false)
+        setRestart(prev => !prev)
+    }, [scheduleInProgress, currentScheduleIndex, scaleSchedule])
+
+    useEffect(() => {
+        if (!roundComplete) return
+
+        setIsPlaying(false)
+
+        if (scheduleInProgress) {
+            if (currentScheduleIndex < scaleSchedule.length - 1) {
+                setCurrentScheduleIndex(prev => prev + 1)
+            } else {
+                setScheduleInProgress(false)
+                setScheduleComplete(true)
+            }
+        }
+
+        setRoundComplete(false)
+    }, [roundComplete, scheduleInProgress, currentScheduleIndex, scaleSchedule.length])
+
+    useEffect(() => {
+        if (!isPlaying) return
+        if (scheduleInProgress) return
+
+        setScheduleComplete(false)
+        currScoreRef.current = []
+    }, [isPlaying, scheduleInProgress])
 
     return (
         <>
@@ -42,6 +97,8 @@ function App() {
 
         <Score 
         roundComplete={roundComplete}
+        scheduleComplete={scheduleComplete}
+        scheduleInProgress={scheduleInProgress}
         currScoreRef={currScoreRef}
         selectedKey={selectedKey}
         selectedScale={selectedScale}
@@ -68,6 +125,7 @@ function App() {
                     setRoundComplete={setRoundComplete}
                     restart={restart}
                     setRestart={setRestart}
+                    scheduleInProgress={scheduleInProgress}
                         />
                 </div>
                 <div className="col-6">
@@ -95,12 +153,10 @@ function App() {
         setRoundComplete={setRoundComplete}
         currScoreRef={currScoreRef}
         />
-        { !isPlaying && 
+        { !isPlaying && !scheduleInProgress &&
         <MixItUp 
-        setSelectedKey={setSelectedKey}
-        setSelectedScale={setSelectedScale}
-        scaleSchedule={scaleSchedule}
-        setScaleSchedule={setScaleSchedule}
+        startMixSchedule={startMixSchedule}
+        scheduleInProgress={scheduleInProgress}
         />
         }
         </>
