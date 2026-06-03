@@ -21,6 +21,7 @@ function App() {
     const [currCardIndex, setCurrCardIndex] = useState(0)
     const [roundComplete, setRoundComplete] = useState(false)
     const [restart, setRestart] = useState(false) // Use to call start() function in metronome from the score component
+    const [scaleSchedule, setScaleSchedule] = useState([])
     
     const currNoteRef = useRef(null)
     const bpmRef = useRef(60)
@@ -98,6 +99,8 @@ function App() {
         <MixItUp 
         setSelectedKey={setSelectedKey}
         setSelectedScale={setSelectedScale}
+        scaleSchedule={scaleSchedule}
+        setScaleSchedule={setScaleSchedule}
         />
         }
         </>
