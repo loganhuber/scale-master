@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext} from 'react'
+import { useState, useEffect, useContext, useRef} from 'react'
 import { addNewScore } from '../context/auth'
 import '../index.css'
 import { AuthContext } from '../context/AuthContext'
@@ -9,6 +9,16 @@ function Score({ roundComplete, scheduleComplete, scheduleInProgress, currScoreR
     const [critique, setCritique] = useState(null)
 
     const { currUser } = useContext(AuthContext)
+
+    const batchScoresRef = useRef([])
+
+    function averageBatchScores(scoreData) {
+        let total = 0
+        for (let data of scoreData) {
+            total += data['score']
+        }
+        return Math.floor(total / scoreData.length)
+    }
 
     function calculateScore(notes) {
         if (!notes.length) return 0
@@ -37,16 +47,9 @@ function Score({ roundComplete, scheduleComplete, scheduleInProgress, currScoreR
         return pickMsg(sucked)
     }
 
-    async function pushScore(scorePercentage) {
+    async function pushScore(scoreData) {
         const token = localStorage.getItem('access_token')
         if (!token) return;
-
-        const scoreData = {
-            "score" : scorePercentage,
-            "scale" : selectedScale,
-            "scale_key" : selectedKey,
-            "bpm" : bpmRef.current
-        }
 
         try {
             // TODO take addNewScore response and use it to update the UI
@@ -57,10 +60,26 @@ function Score({ roundComplete, scheduleComplete, scheduleInProgress, currScoreR
         }
     }
 
+    function buildScoreData(scorePercentage) {
+        return {
+            "score" : scorePercentage,
+            "scale" : selectedScale,
+            "scale_key" : selectedKey,
+            "bpm" : bpmRef.current
+        }
+    }
+
 
     useEffect(() => {
-        if (scheduleInProgress) return;
         if (!roundComplete && !scheduleComplete) return;
+
+        if (scheduleInProgress && roundComplete) {
+            const scorePercentage = calculateScore(currScoreRef.current)
+            const scoreData = buildScoreData(scorePercentage)
+            batchScoresRef.current.push(scoreData)
+            currScoreRef.current = []
+            return;
+        }
 
         const scorePercentage = calculateScore(currScoreRef.current)
         const critique = getCritique(scorePercentage)
@@ -69,7 +88,21 @@ function Score({ roundComplete, scheduleComplete, scheduleInProgress, currScoreR
         setCritique(critique)
         currScoreRef.current = []
         setScoreDisplayed(true)
-        if (currUser) pushScore(scorePercentage) 
+        // if (currUser) pushScore(scorePercentage) 
+        if (currUser && batchScoresRef.current.length === 0) {
+            const scoreData = buildScoreData(scorePercentage)
+            pushScore(scoreData)
+        }
+        if (currUser && batchScoresRef.current.length > 0) {
+            const overallScore = averageBatchScores(batchScoresRef.current)
+            setScore(overallScore)
+            // TODO IN API 
+            // set up a batch scores endpoint to recieve multiple scores in one request
+            for (let data of batchScoresRef.current) {
+                pushScore(data)
+            }
+            batchScoresRef.current = []
+        }
     }, [roundComplete, scheduleComplete, scheduleInProgress])
 
     return (
