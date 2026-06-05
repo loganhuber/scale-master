@@ -48,17 +48,6 @@ export async function loginUser(formData) {
     localStorage.setItem('access_token', data.access_token)
     console.log("Successful Login")
     return data.access_token
-    // if (response.ok) {
-    //     const data = await response.json()
-    //     localStorage.setItem('access_token', data.access_token)
-    //     // console.log("Successful Login", data.access_token)
-    //     return data.access_token
-    // }
-    // else {
-    //     const error = await response.json();
-    //     return error.detail
-    //     console.log(`Error: ${getErrorMessage(error)}`)
-    //     }
 }
 
 export async function fetchUserData(id) {
@@ -126,6 +115,28 @@ export async function addNewScore(token, scoreData) {
         const data = response.json()
         console.log("Added Score", data)
         return response
+    }
+}
+
+export async function addBatchScores(token, scores) {
+    const url = `${scoresUrlBase}/batch`
+    const response = await fetch(url, {
+            method : 'POST',
+            headers : {
+                "Content-Type" : "application/json",
+                "Authorization" : `Bearer ${token}`
+            },
+            body : JSON.stringify(scoreData)
+            })
+    if (!response.ok) {
+        const error = await response.json()
+        console.log("Error adding scores", error)
+        return response
+    }
+    else {
+        const data = response.json()
+        console.log("Added scores", data)
+        return data
     }
 }
 

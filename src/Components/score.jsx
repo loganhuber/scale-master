@@ -3,7 +3,14 @@ import { addNewScore } from '../context/auth'
 import '../index.css'
 import { AuthContext } from '../context/AuthContext'
 
-function Score({ roundComplete, scheduleComplete, scheduleInProgress, currScoreRef, selectedKey, selectedScale, bpmRef, setRestart }) {
+function Score({ roundComplete,
+                scheduleComplete,
+                scheduleInProgress,
+                currScoreRef,
+                selectedKey,
+                selectedScale,
+                bpmRef,
+                setRestart }) {
     const [scoreDisplayed, setScoreDisplayed] = useState(false)
     const [score, setScore] = useState(0)
     const [critique, setCritique] = useState(null)
@@ -52,7 +59,7 @@ function Score({ roundComplete, scheduleComplete, scheduleInProgress, currScoreR
         if (!token) return;
 
         try {
-            // TODO take addNewScore response and use it to update the UI
+            // TODO take addNewScore response and use it to update the stats component
             await addNewScore(token, scoreData)
             // console.log("New Score", newScore)
         } catch (error) {
@@ -81,6 +88,9 @@ function Score({ roundComplete, scheduleComplete, scheduleInProgress, currScoreR
             return;
         }
 
+        // TODO adjust this logic
+        // in mixitup mode it's currently calculating scores and adjusting state after each round
+        // those things aren't needed until the very last round
         const scorePercentage = calculateScore(currScoreRef.current)
         const critique = getCritique(scorePercentage)
 
@@ -88,11 +98,13 @@ function Score({ roundComplete, scheduleComplete, scheduleInProgress, currScoreR
         setCritique(critique)
         currScoreRef.current = []
         setScoreDisplayed(true)
-        // if (currUser) pushScore(scorePercentage) 
+        
+        // push the single score if in regular mode
         if (currUser && batchScoresRef.current.length === 0) {
             const scoreData = buildScoreData(scorePercentage)
             pushScore(scoreData)
         }
+        // batch send indivudual scores if there are more than one
         if (currUser && batchScoresRef.current.length > 0) {
             const overallScore = averageBatchScores(batchScoresRef.current)
             setScore(overallScore)

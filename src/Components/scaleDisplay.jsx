@@ -1,7 +1,17 @@
 import { useState, useEffect, useRef } from 'react'
 import './scaleDisplay.css'
 
-function ScaleDisplay({ selectedScale, scales, selectedKey, count, currNoteRef, isListening, currCardIndex, setCurrCardIndex, roundComplete, setRoundComplete, currScoreRef }) {
+function ScaleDisplay({ selectedScale,
+                        scales,
+                        selectedKey,
+                        count,
+                        currNoteRef,
+                        isListening,
+                        currCardIndex,
+                        setCurrCardIndex,
+                        roundComplete,
+                        setRoundComplete, 
+                        currScoreRef }) {
     const [notes, setNotes] = useState([getNotes('C', [0, 2, 4, 5, 7, 9, 11])])
     const [cardResults, setCardResults] = useState(Array(notes.length).fill(null))
     const [totalRoundBeats, setTotalRoundBeats] = useState(8) 
@@ -19,9 +29,17 @@ function ScaleDisplay({ selectedScale, scales, selectedKey, count, currNoteRef, 
         return [...scale, chromatic[index]]
     }
 
+    function transposeNote(notePlayed) {
+        // return the note that is the transposed interval away
+        return
+    }
+
     // returns bool based on if the note played matches the intended note
     function checkNote(intendedNote, notePlayed) {
         if (notePlayed) notePlayed = notePlayed.replace(/\d+/g, '') // filter out the octave number
+
+        // TODO if the user needs to transpose:
+        // update the note played to the transposed notes before comparing
         if (intendedNote == notePlayed) return true;
         else return false;
     }
