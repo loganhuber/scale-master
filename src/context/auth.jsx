@@ -68,13 +68,6 @@ export async function fetchUserData(id) {
 
 }
 
-// pass in regular object containing user data 
-// example:
-    // const userData = {
-    //     'username' : 'spreadward',
-    //     'email' : 'spreadward@gmail.com',
-    //     'pw_hash' : 'password'
-    // }
 export async function createNewUser(userData) {
     const url = userUrlBase
 
@@ -85,13 +78,26 @@ export async function createNewUser(userData) {
     })
 
     if (!response.ok) {
+        let message = "There was an error creating an account. Please try again"
         const error = await response.json()
-        console.log(`Error: ${error}`)
+
+        if (typeof error.detail === 'string') {
+            message = error.detail  
+        }
+        else if (Array.isArray(error.detail)) {
+            // console.log("HERE", error.detail)
+            
+            message = error.detail.map((e) => e.msg).join(', ')
+        }
+        throw new Error(message)
+        // console.log(`Error: ${error}`)
         return
     }
 
+
     const newUser = await response.json()
-    console.log("New User:", newUser)
+    // console.log("New User:", newUser)
+    return newUser
 }
 
 // Remember to get data.access_token and not the entire token object
@@ -140,7 +146,6 @@ export async function addBatchScores(token, scores) {
     }
 }
 
-
 export async function getUserScores(userId) {
     const url = `${scoresUrlBase}/${userId}/scores`
 
@@ -154,5 +159,4 @@ export async function getUserScores(userId) {
         const scoreData = response.json()
         return scoreData
     }
-
 }

@@ -18,9 +18,6 @@ function Navbar() {
         setCurrUser(null)
     }
 
-    useEffect(() => {
-        console.log("User Stats: ", userStats)
-    }, [])
 
 
     const Stats = () => {

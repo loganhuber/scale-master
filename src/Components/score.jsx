@@ -32,7 +32,6 @@ function Score({ roundComplete,
         notes.forEach((note) => {
             if (note === true) correctNotes++
         })
-        // console.log("NOTES: " + notes)
         return Math.floor((correctNotes / notes.length) * 100)
     }
 
@@ -64,10 +63,8 @@ function Score({ roundComplete,
         if (!token) return;
 
         try {
-            // TODO take addNewScore response and use it to update the stats component
             const newScore = await addNewScore(token, scoreData)
             appendToStats([newScore])
-            // console.log("New Score", newScore)
         } catch (error) {
             console.log("Error pushing new score", error)
         }
@@ -78,7 +75,6 @@ function Score({ roundComplete,
     if (!token) return;
 
     try {
-        // TODO take addNewScore response and use it to update the stats component
         const newScores = await addBatchScores(token, scoresData)
         appendToStats(newScores)
     } catch (error) {
@@ -94,9 +90,6 @@ function Score({ roundComplete,
             "bpm" : bpmRef.current
         }
     }
-
-    
-
 
     useEffect(() => {
         if (!roundComplete && !scheduleComplete) return;
