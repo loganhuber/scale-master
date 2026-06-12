@@ -15,7 +15,7 @@ function Score({ roundComplete,
     const [score, setScore] = useState(0)
     const [critique, setCritique] = useState(null)
 
-    const { currUser } = useContext(AuthContext)
+    const { currUser, userStats, setUserStats } = useContext(AuthContext)
     const batchScoresRef = useRef([])
 
     function averageBatchScores(scoreData) {
@@ -53,13 +53,20 @@ function Score({ roundComplete,
         return pickMsg(sucked)
     }
 
+    function appendToStats(newScores) {
+        console.log("new scores response", newScores)
+        const prevStats = userStats
+        setUserStats([...newScores, ...prevStats])
+    }
+
     async function pushScore(scoreData) {
         const token = localStorage.getItem('access_token')
         if (!token) return;
 
         try {
             // TODO take addNewScore response and use it to update the stats component
-            await addNewScore(token, scoreData)
+            const newScore = await addNewScore(token, scoreData)
+            appendToStats([newScore])
             // console.log("New Score", newScore)
         } catch (error) {
             console.log("Error pushing new score", error)
@@ -72,8 +79,8 @@ function Score({ roundComplete,
 
     try {
         // TODO take addNewScore response and use it to update the stats component
-        await addBatchScores(token, scoresData)
-        // console.log("New Score", newScore)
+        const newScores = await addBatchScores(token, scoresData)
+        appendToStats(newScores)
     } catch (error) {
         console.log("Error adding new scores", error)
     }
