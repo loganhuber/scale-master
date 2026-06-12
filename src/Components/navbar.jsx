@@ -59,7 +59,8 @@ function Navbar() {
         setLoggingIn={setLoggingIn}
         setCurrUser={setCurrUser} />: ''}
         { isRegistering ? <RegisterForm 
-        setIsRegistering={setIsRegistering} 
+        setIsRegistering={setIsRegistering}
+        setLoggingIn={setLoggingIn} 
         /> : ''}
         { viewingStats ? <Stats /> : ''}
         <nav className="navbar navbar-expand-lg bg-body-tertiary">

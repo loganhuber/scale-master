@@ -1,6 +1,6 @@
 import { createNewUser } from "../../context/auth";
 
-function RegisterForm({ setIsRegistering }) {
+function RegisterForm({ setIsRegistering, setLoggingIn }) {
 
     function handleNewAccount(e) {
         e.preventDefault();
@@ -8,10 +8,11 @@ function RegisterForm({ setIsRegistering }) {
         const userData = {
             "username" : formData.get('username'),
             "email" : formData.get('email'),
-            "pw_hash" : formData.get('password')
+            "password" : formData.get('password')
         }
         createNewUser(userData);
-        setIsRegistering(false)
+        setIsRegistering(false);
+        setLoggingIn(true);
 
         // TODO show some message thanking for creating an account
     };
