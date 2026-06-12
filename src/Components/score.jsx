@@ -16,7 +16,6 @@ function Score({ roundComplete,
     const [critique, setCritique] = useState(null)
 
     const { currUser } = useContext(AuthContext)
-
     const batchScoresRef = useRef([])
 
     function averageBatchScores(scoreData) {
@@ -33,7 +32,7 @@ function Score({ roundComplete,
         notes.forEach((note) => {
             if (note === true) correctNotes++
         })
-        console.log("NOTES: " + notes)
+        // console.log("NOTES: " + notes)
         return Math.floor((correctNotes / notes.length) * 100)
     }
 
@@ -89,9 +88,13 @@ function Score({ roundComplete,
         }
     }
 
+    
+
+
     useEffect(() => {
         if (!roundComplete && !scheduleComplete) return;
 
+        // keep storing scores until schedule is complete
         if (scheduleInProgress && roundComplete) {
             const scorePercentage = calculateScore(currScoreRef.current)
             const scoreData = buildScoreData(scorePercentage)
@@ -100,9 +103,6 @@ function Score({ roundComplete,
             return;
         }
 
-        // TODO adjust this logic
-        // in mixitup mode it's currently calculating scores and adjusting state after each round
-        // those things aren't needed until the very last round
         const scorePercentage = calculateScore(currScoreRef.current)
         const critique = getCritique(scorePercentage)
 
@@ -116,11 +116,13 @@ function Score({ roundComplete,
             const scoreData = buildScoreData(scorePercentage)
             pushScore(scoreData)
         }
-        // batch send indivudual scores if there are more than one
-        if (currUser && batchScoresRef.current.length > 0) {
+        // send all scores in one batch if there are more than one
+        if (batchScoresRef.current.length > 0) {
             const overallScore = averageBatchScores(batchScoresRef.current)
             setScore(overallScore)
-            addBatchScores(batchScoresRef.current)
+
+            currUser && pushBatchScores(batchScoresRef.current)
+
             batchScoresRef.current = []
         }
     }, [roundComplete, scheduleComplete, scheduleInProgress])

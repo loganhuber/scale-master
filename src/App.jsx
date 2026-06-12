@@ -25,7 +25,7 @@ function App() {
     const currNoteRef = useRef(null)
     const bpmRef = useRef(60)
     const currScoreRef = useRef([])
-    const transposeIntervalRef = useRef(0)
+    const transposeIntervalRef = useRef(0) // scalePicker sets the interval, scaleDisplay transposes based on the interval
 
     // mix it up scheduler
     const [scaleSchedule, setScaleSchedule] = useState([])
