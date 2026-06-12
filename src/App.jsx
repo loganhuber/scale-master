@@ -25,12 +25,14 @@ function App() {
     const currNoteRef = useRef(null)
     const bpmRef = useRef(60)
     const currScoreRef = useRef([])
+    const transposeIntervalRef = useRef(0)
 
     // mix it up scheduler
     const [scaleSchedule, setScaleSchedule] = useState([])
     const [currentScheduleIndex, setCurrentScheduleIndex] = useState(0)
     const [scheduleInProgress, setScheduleInProgress] = useState(false)
     const [scheduleComplete, setScheduleComplete] = useState(false)
+
 
     function startMixSchedule(schedule) {
         setScaleSchedule(schedule)
@@ -135,6 +137,7 @@ function App() {
                         setSelectedScale={setSelectedScale}
                         scales={scales}
                         isPlaying={isPlaying}
+                        transposeIntervalRef={transposeIntervalRef}
                         />
                 </div>
             </div>
@@ -152,6 +155,7 @@ function App() {
         roundComplete={roundComplete}
         setRoundComplete={setRoundComplete}
         currScoreRef={currScoreRef}
+        transposeIntervalRef={transposeIntervalRef}
         />
         { !isPlaying && !scheduleInProgress &&
         <MixItUp 

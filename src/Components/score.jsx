@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext, useRef} from 'react'
-import { addNewScore } from '../context/auth'
+import { addNewScore, addBatchScores } from '../context/auth'
 import '../index.css'
 import { AuthContext } from '../context/AuthContext'
 
@@ -67,6 +67,19 @@ function Score({ roundComplete,
         }
     }
 
+    async function pushBatchScores(scoresData) {
+    const token = localStorage.getItem('access_token')
+    if (!token) return;
+
+    try {
+        // TODO take addNewScore response and use it to update the stats component
+        await addBatchScores(token, scoresData)
+        // console.log("New Score", newScore)
+    } catch (error) {
+        console.log("Error adding new scores", error)
+    }
+}
+
     function buildScoreData(scorePercentage) {
         return {
             "score" : scorePercentage,
@@ -75,7 +88,6 @@ function Score({ roundComplete,
             "bpm" : bpmRef.current
         }
     }
-
 
     useEffect(() => {
         if (!roundComplete && !scheduleComplete) return;
@@ -108,11 +120,7 @@ function Score({ roundComplete,
         if (currUser && batchScoresRef.current.length > 0) {
             const overallScore = averageBatchScores(batchScoresRef.current)
             setScore(overallScore)
-            // TODO IN API 
-            // set up a batch scores endpoint to recieve multiple scores in one request
-            for (let data of batchScoresRef.current) {
-                pushScore(data)
-            }
+            addBatchScores(batchScoresRef.current)
             batchScoresRef.current = []
         }
     }, [roundComplete, scheduleComplete, scheduleInProgress])

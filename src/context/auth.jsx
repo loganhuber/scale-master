@@ -126,7 +126,7 @@ export async function addBatchScores(token, scores) {
                 "Content-Type" : "application/json",
                 "Authorization" : `Bearer ${token}`
             },
-            body : JSON.stringify(scoreData)
+            body : JSON.stringify(scores)
             })
     if (!response.ok) {
         const error = await response.json()
