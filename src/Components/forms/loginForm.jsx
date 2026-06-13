@@ -14,7 +14,7 @@ function LoginForm({ setIsRegistering, setLoggingIn }) {
             await loginUser(formData)
             const currUser = await getCurrentUser()
             // console.log("Current User: ", currUser)
-            const userScores = await getCurrentUser(currUser["id"])
+            const userScores = await getUserScores(currUser["id"])
 
             setCurrUser(currUser["username"])
             setUserStats(userScores)
