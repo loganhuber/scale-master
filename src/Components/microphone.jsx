@@ -107,21 +107,24 @@ function Microphone({ isListening, currNoteRef }) {
 
     }, [isListening])
 
-    return (
-        <div className='container-12 m-5'>
-            <div className="row justify-content-center text-center m-5">
-                    <p className='w-25'>
-                        Pitch: {pitch ?? '--'} Hz
-                    </p>
-                    <p className='w-25'>
-                        Note: {notePlayed ?? '--'}
-                    </p>
-                    <p className='w-25'>
-                        Clarity: {clarity ?? '--'}%
-                    </p>
-            </div>
-        </div>
-    )
+    // Leave commented out. 
+    // This is here only for debugging purposes
+    
+    // return (
+    //     <div className='container-12 m-5'>
+    //         <div className="row justify-content-center text-center m-5">
+    //                 <p className='w-25'>
+    //                     Pitch: {pitch ?? '--'} Hz
+    //                 </p>
+    //                 <p className='w-25'>
+    //                     Note: {notePlayed ?? '--'}
+    //                 </p>
+    //                 <p className='w-25'>
+    //                     Clarity: {clarity ?? '--'}%
+    //                 </p>
+    //         </div>
+    //     </div>
+    // )
 }
 
 export default Microphone

@@ -2,6 +2,7 @@ import { useState, useEffect, useContext, useRef} from 'react'
 import { addNewScore, addBatchScores } from '../context/auth'
 import '../index.css'
 import { AuthContext } from '../context/AuthContext'
+import { scales } from '../globalVars.js'
 
 function Score({ roundComplete,
                 scheduleComplete,
@@ -85,7 +86,7 @@ function Score({ roundComplete,
     function buildScoreData(scorePercentage) {
         return {
             "score" : scorePercentage,
-            "scale" : selectedScale,
+            "scale" : scales[selectedScale].name,
             "scale_key" : selectedKey,
             "bpm" : bpmRef.current
         }
