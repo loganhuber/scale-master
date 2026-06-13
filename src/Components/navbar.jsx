@@ -18,6 +18,11 @@ function Navbar() {
         setCurrUser(null)
     }
 
+    function formatDate(data) {
+        const date = new Date(data).toLocaleDateString()
+        return date
+    }
+
 
 
     const Stats = () => {
@@ -29,7 +34,7 @@ function Navbar() {
                     { userStats?.length ?
                         userStats.map((stat, index) => {
                            return (
-                             <li key={index} >{stat['score']}% --- {stat['scale_key']} {stat['scale']} --- {stat['bpm']} BPM</li>
+                             <li key={index} >{stat['score']}% --- {stat['scale_key']} {stat['scale']} --- {stat['bpm']} BPM --- {formatDate(stat['date'])}</li>
                            )
                         })
                         :

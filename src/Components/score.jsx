@@ -77,6 +77,7 @@ function Score({ roundComplete,
 
     try {
         const newScores = await addBatchScores(token, scoresData)
+        console.log("New Scores", newScores)
         appendToStats(newScores)
     } catch (error) {
         console.log("Error adding new scores", error)
