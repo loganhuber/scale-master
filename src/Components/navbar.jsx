@@ -9,6 +9,9 @@ function Navbar() {
     const [loggingIn, setLoggingIn] = useState(false)
     const [isRegistering, setIsRegistering] = useState(false)
     const [viewingStats, setViewingStats] = useState(false)
+    const [offset, setOffset] = useState(0)
+    const [statCount, setStatCount] = useState(5)
+    
 
     const { currUser, setCurrUser, userStats, setUserStats } = useContext(AuthContext)
 
@@ -23,7 +26,15 @@ function Navbar() {
         return date
     }
 
+    function nextPage() {
+        setOffset(prev => prev + 5)
+        setStatCount(prev => prev + 5)
+    }
 
+    function prevPage() {
+        setOffset(prev => prev - 5)
+        setStatCount(prev => prev - 5)
+    }
 
     const Stats = () => {
         return (
@@ -45,8 +56,10 @@ function Navbar() {
                         </thead>
                         <tbody>
 
-                            { userStats?.length ?
-                                userStats.map((stat, index) => {
+                            { 
+                            
+                            userStats?.length ?
+                                userStats.slice(offset, statCount).map((stat, index) => {
                                 return (
                                     <tr key={index}>
                                         <td >{stat['score']}%</td>
@@ -62,21 +75,21 @@ function Navbar() {
                         </tbody>
                     
                     </table>
-                    {/* <ul>
-                        { userStats?.length ?
-                            userStats.map((stat, index) => {
-                            return (
-                                <li key={index} >{stat['score']}% --- {stat['scale_key']} {stat['scale']} --- {stat['bpm']} BPM --- {formatDate(stat['date'])}</li>
-                            )
-                            })
-                            :
-                            <li>No Stats Yet</li>
-                        }
-                    </ul> */}
+                    <ul className="pagination">
+                        <li className='page-item'>
+                            <button href="#" className="page-link" disabled={offset === 0} onClick={prevPage}>Previous</button>
+                        </li>
+                        <li className='page-item'>
+                            <button href="#" className='page-link' disabled={(statCount) > userStats.length} onClick={nextPage}>Next</button>
+                        </li>
+                    </ul>
+                    {/* <div>
+                        <button className='btn btn-light' disabled={offset === 0} onClick={prevPage}>Previous</button>
+                        <button className='btn btn-light' disabled={(statCount) > userStats.length} onClick={nextPage} >Next</button>
+                    </div> */}
                     <button className='btn btn-light' onClick={() => {
                         setViewingStats(false)
                     }}>Close</button>
-
                 </div>
             </div>
         )
