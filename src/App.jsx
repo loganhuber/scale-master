@@ -89,7 +89,7 @@ function App() {
         <>
         <Navbar 
         />
-        <h1 className='text-center m-5' >Let's Practice Scales!</h1>
+        <h1 className='text-center m-3' >Let's Practice Scales!</h1>
         <CountIn 
         count={count}
         isPlaying={isPlaying}
@@ -129,7 +129,7 @@ function App() {
         />
 
         
-        <div className="container w-50">
+        <div className="container w-50 card p-3">
             <div className="row">
 
                 <div className="col-6">

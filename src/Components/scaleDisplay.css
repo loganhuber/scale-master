@@ -2,8 +2,9 @@
     width: 100px;
     height: 100px;
     border-radius: 5px;
-    transition: transform ease-in-out .1s;
-    transition: color ease .01s;
+    transition: 
+        transform ease-in-out .07s,
+        background-color ease .03s;
 }
 
 .note-text {

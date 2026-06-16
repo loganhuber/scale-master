@@ -29,7 +29,7 @@ function MixItUp({ startMixSchedule, scheduleInProgress }) {
     // }, [scaleSchedule])
 
     return (
-        <div className="d-flex justify-content-center">
+        <div className="d-flex justify-content-center m-3">
             <button className="btn btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" title=""
             onClick={setRandomScales}>
                 Want to mix it up?
