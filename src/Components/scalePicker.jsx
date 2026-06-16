@@ -66,7 +66,7 @@ function ScalePicker({ selectedKey, setSelectedKey, selectedScale, setSelectedSc
 
 
     return (
-        <div className="container">
+        <div className="container ">
             <h2 className='text-end'>Pick a Scale</h2>
             <form className="d-flex flex-column align-items-end gap-1" action=''>
                 <div className="">

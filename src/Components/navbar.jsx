@@ -28,22 +28,55 @@ function Navbar() {
     const Stats = () => {
         return (
             <div className="message-overlay">
+
+                <div className='d-flex flex-column align-items-center justify-content-center m-5'>
                     <h2>Stats</h2>
                     <p>{currUser}</p>
-                <ul>
-                    { userStats?.length ?
-                        userStats.map((stat, index) => {
-                           return (
-                             <li key={index} >{stat['score']}% --- {stat['scale_key']} {stat['scale']} --- {stat['bpm']} BPM --- {formatDate(stat['date'])}</li>
-                           )
-                        })
-                        :
-                        <li>No Stats Yet</li>
-                    }
-                </ul>
-                <button className='btn btn-light' onClick={() => {
-                    setViewingStats(false)
-                }}>Close</button>
+                    <table className='table table-striped m-5'>
+                        <thead>
+                            <tr>
+                                <th>Score</th>
+                                <th>Scale</th>
+                                <th>BPM</th>
+                                <th>Date</th>
+                            </tr>
+
+                        </thead>
+                        <tbody>
+
+                            { userStats?.length ?
+                                userStats.map((stat, index) => {
+                                return (
+                                    <tr key={index}>
+                                        <td >{stat['score']}%</td>
+                                        <td>{stat['scale_key']} {stat['scale']}</td>
+                                        <td>{stat['bpm']} BPM</td>
+                                        <td>{formatDate(stat['date'])}</td>
+                                    </tr>
+                                )
+                                })
+                                :
+                                <li>No Stats Yet</li>
+                            }
+                        </tbody>
+                    
+                    </table>
+                    {/* <ul>
+                        { userStats?.length ?
+                            userStats.map((stat, index) => {
+                            return (
+                                <li key={index} >{stat['score']}% --- {stat['scale_key']} {stat['scale']} --- {stat['bpm']} BPM --- {formatDate(stat['date'])}</li>
+                            )
+                            })
+                            :
+                            <li>No Stats Yet</li>
+                        }
+                    </ul> */}
+                    <button className='btn btn-light' onClick={() => {
+                        setViewingStats(false)
+                    }}>Close</button>
+
+                </div>
             </div>
         )
     }
@@ -67,7 +100,7 @@ function Navbar() {
         { viewingStats ? <Stats /> : ''}
         <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
-            <a className="navbar-brand" href="#">Let's Practice Scales!</a>
+            {/* <a className="navbar-brand" href="#">Let's Practice Scales!</a> */}
             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
             </button>

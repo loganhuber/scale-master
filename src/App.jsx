@@ -89,6 +89,7 @@ function App() {
         <>
         <Navbar 
         />
+        <h1 className='text-center m-5' >Let's Practice Scales!</h1>
         <CountIn 
         count={count}
         isPlaying={isPlaying}
@@ -112,6 +113,22 @@ function App() {
         currNoteRef={currNoteRef}
             />
 
+        <ScaleDisplay
+        selectedScale={selectedScale}
+        scales={scales}
+        selectedKey={selectedKey}
+        count={count}
+        currNoteRef={currNoteRef}
+        isListening={isListening}
+        currCardIndex={currCardIndex}
+        setCurrCardIndex={setCurrCardIndex}
+        roundComplete={roundComplete}
+        setRoundComplete={setRoundComplete}
+        currScoreRef={currScoreRef}
+        transposeIntervalRef={transposeIntervalRef}
+        />
+
+        
         <div className="container w-50">
             <div className="row">
 
@@ -143,20 +160,6 @@ function App() {
             </div>
         </div>
 
-        <ScaleDisplay
-        selectedScale={selectedScale}
-        scales={scales}
-        selectedKey={selectedKey}
-        count={count}
-        currNoteRef={currNoteRef}
-        isListening={isListening}
-        currCardIndex={currCardIndex}
-        setCurrCardIndex={setCurrCardIndex}
-        roundComplete={roundComplete}
-        setRoundComplete={setRoundComplete}
-        currScoreRef={currScoreRef}
-        transposeIntervalRef={transposeIntervalRef}
-        />
         { !isPlaying && !scheduleInProgress &&
         <MixItUp 
         startMixSchedule={startMixSchedule}

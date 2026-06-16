@@ -120,6 +120,10 @@ function ScaleDisplay({ selectedScale,
 
 
     return (
+        <>
+        <div className='card m-auto w-25'>
+            <h2 className='text-center m-5'>{selectedKey} {scales[selectedScale].name}</h2>
+        </div>
         <div className="d-flex justify-content-center my-5">
             <div className="d-flex gap-5">
                 { notes.map((note, index) => {
@@ -137,6 +141,7 @@ function ScaleDisplay({ selectedScale,
                 })}
             </div>
         </div>
+        </>
     )
 }
 
