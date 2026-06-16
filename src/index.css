@@ -8,6 +8,7 @@
     align-items: center;
 
     background: rgba(0,0,0,0.95);
+    padding-top: 50px;
 
     z-index: 9999;
 }

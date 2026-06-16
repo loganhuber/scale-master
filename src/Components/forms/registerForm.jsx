@@ -28,7 +28,7 @@ function RegisterForm({ setIsRegistering, setLoggingIn }) {
     return (
         <div className="message-overlay">
         <h3>Create an account</h3>
-        <form onSubmit={handleNewAccount} className="d-flex flex-column m-2 gap-3">
+        <form onSubmit={handleNewAccount} className="d-flex flex-column m-5 gap-3 card p-5">
                 { error && 
                 <div className="alert alert-danger">{error}</div>
                 }

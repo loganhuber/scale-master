@@ -134,7 +134,7 @@ function Score({ roundComplete,
         { scoreDisplayed ? 
         (
             <div className='message-overlay'>
-                <div className="container m-5">
+                <div className="container" style={{ margin: 'auto'}}>
                     <div className="row text-center">
                         <h2>{critique}</h2>
                     </div>

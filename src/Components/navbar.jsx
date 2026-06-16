@@ -29,10 +29,11 @@ function Navbar() {
         return (
             <div className="message-overlay">
 
-                <div className='d-flex flex-column align-items-center justify-content-center m-5'>
+                <div className='d-flex flex-column align-items-center justify-content-center'
+                 style={{ width: '600px'}}>
                     <h2>Stats</h2>
                     <p>{currUser}</p>
-                    <table className='table table-striped m-5'>
+                    <table className='table table-striped p-5 border border-2'>
                         <thead>
                             <tr>
                                 <th>Score</th>

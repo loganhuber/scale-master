@@ -33,9 +33,12 @@ function CountIn({ count, isPlaying, setIsListening, selectedKey, selectedScale 
             {isShown ?
                 (
                 <div className="message-overlay">
-                    <h1>{selectedKey} {scales[selectedScale]["name"]}</h1>
-                    <h2 className="Display-1">Ready in...</h2>
-                    <div className="count-number">{count}</div>
+                    <div className='d-flex flex-column align-items-center' style={{margin: 'auto auto'}}>
+                        <h1>{selectedKey} {scales[selectedScale]["name"]}</h1>
+                        <h2 className="Display-1">Ready in...</h2>
+                        <div className="count-number">{count}</div>
+
+                    </div>
                 </div>
                 ) :
                 ''
