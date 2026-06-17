@@ -129,6 +129,12 @@ function Score({ roundComplete,
         }
     }, [roundComplete, scheduleComplete, scheduleInProgress])
 
+    function scoreColor(score) {
+        if (score >= 80) return 'bg-success'
+        if (score >= 65) return 'bg-warning'
+        else return 'bg-danger'
+    }
+
     return (
         <>
         { scoreDisplayed ? 
@@ -139,7 +145,11 @@ function Score({ roundComplete,
                         <h2>{critique}</h2>
                     </div>
                     <div className="row text-center">
-                        <h2>Score: {score}%</h2>
+                        <h2 className='m-3'>Score:&nbsp;
+                            <span className={`p-2 rounded ${scoreColor(score)}`}>
+                                {score}%
+                            </span>
+                        </h2>
                     </div>
                     <div className="row d-flex justify-content-center gap-2">
                     <button className="btn btn-light col-1" onClick={
