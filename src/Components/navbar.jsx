@@ -10,11 +10,10 @@ function Navbar() {
     const [isRegistering, setIsRegistering] = useState(false)
     const [viewingStats, setViewingStats] = useState(false)
     const [offset, setOffset] = useState(0)
-    const [statCount, setStatCount] = useState(5)
-    
-
+    const [totalPerPage, setTotalPerPage] = useState(5)
+    const [statCount, setStatCount] = useState(totalPerPage)
     const { currUser, setCurrUser, userStats, setUserStats } = useContext(AuthContext)
-
+    
     function logoutUser() {
         localStorage.removeItem('access_token')
         setUserStats(null)
@@ -26,14 +25,9 @@ function Navbar() {
         return date
     }
 
-    function nextPage() {
-        setOffset(prev => prev + 5)
-        setStatCount(prev => prev + 5)
-    }
-
-    function prevPage() {
-        setOffset(prev => prev - 5)
-        setStatCount(prev => prev - 5)
+    function switchPage(direction) {
+        setOffset(prev => prev + direction)
+        setStatCount(prev => prev + direction)
     }
 
     const Stats = () => {
@@ -57,7 +51,6 @@ function Navbar() {
                         <tbody>
 
                             { 
-                            
                             userStats?.length ?
                                 userStats.slice(offset, statCount).map((stat, index) => {
                                 return (
@@ -77,18 +70,16 @@ function Navbar() {
                     </table>
                     <ul className="pagination">
                         <li className='page-item'>
-                            <button href="#" className="page-link" disabled={offset === 0} onClick={prevPage}>Previous</button>
+                            <button className={`page-link ${offset === 0 && 'disabled'}`} disabled={offset === 0} onClick={() => switchPage(-totalPerPage)}>Previous</button>
                         </li>
                         <li className='page-item'>
-                            <button href="#" className='page-link' disabled={(statCount) > userStats.length} onClick={nextPage}>Next</button>
+                            <button className={`page-link ${(statCount) > userStats.length && 'disabled'} `} disabled={(statCount) > userStats.length} onClick={() => switchPage(totalPerPage)}>Next</button>
                         </li>
                     </ul>
-                    {/* <div>
-                        <button className='btn btn-light' disabled={offset === 0} onClick={prevPage}>Previous</button>
-                        <button className='btn btn-light' disabled={(statCount) > userStats.length} onClick={nextPage} >Next</button>
-                    </div> */}
                     <button className='btn btn-light' onClick={() => {
                         setViewingStats(false)
+                        setOffset(0)
+                        setStatCount(totalPerPage)
                     }}>Close</button>
                 </div>
             </div>
