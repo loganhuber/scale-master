@@ -28,10 +28,6 @@ export function AuthProvider({ children }) {
     loadUser()
 }, [])
 
-    useEffect(() => {
-        console.log(userStats)
-    }, [])
-
     return (
         <AuthContext.Provider
             value={{
