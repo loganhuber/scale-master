@@ -1,14 +1,17 @@
-import { useState, useContext } from "react"
+import { useState, useContext, useEffect } from "react"
 import { AuthContext } from "../context/AuthContext"
 
 
 function Stats({ viewingStats, setViewingStats}) {
 
+    const { currUser, setCurrUser, userStats, setUserStats } = useContext(AuthContext)
+
     const [offset, setOffset] = useState(0)
     const [totalPerPage, setTotalPerPage] = useState(5)
     const [statCount, setStatCount] = useState(totalPerPage)
+
     const [currPage, setCurrPage] = useState(1)
-    const { currUser, setCurrUser, userStats, setUserStats } = useContext(AuthContext)
+    const [totalPages, setTotalPages] = useState(null)
 
     function formatDate(data) {
         const date = new Date(data).toLocaleDateString()
@@ -18,7 +21,15 @@ function Stats({ viewingStats, setViewingStats}) {
     function switchPage(direction) {
         setOffset(prev => prev + direction)
         setStatCount(prev => prev + direction)
+        direction > 0 ? setCurrPage(prev => prev + 1) : setCurrPage(prev => prev - 1)
     }
+
+    useEffect(() => {
+        const pages = Math.ceil(userStats.length / totalPerPage)
+        setTotalPages(pages)
+    }, [userStats])
+
+
 
     return (
         <div className="message-overlay">
@@ -57,7 +68,7 @@ function Stats({ viewingStats, setViewingStats}) {
                     </tbody>
                 
                 </table>
-                <p>Page {currPage}/5</p>
+                <p>Page {currPage}/{totalPages}</p>
                 <ul className="pagination">
                     <li className='page-item'>
                         <button className={`page-link ${offset === 0 && 'disabled'}`} disabled={offset === 0} onClick={() => switchPage(-totalPerPage)}>Previous</button>
