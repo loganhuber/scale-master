@@ -129,10 +129,10 @@ function App() {
         />
 
         
-        <div className="container w-50 card p-3">
-            <div className="row">
+        <div className="container p-3">
+            <div className="row flex-column justify-content-center flex-md-row align-items-center">
 
-                <div className="col-6">
+                <div className="col-12 col-lg-3 p-1">
                     <Metronome
                     setIsListening={setIsListening}
                     count={count}
@@ -147,7 +147,7 @@ function App() {
                     scheduleInProgress={scheduleInProgress}
                         />
                 </div>
-                <div className="col-6">
+                <div className="col-12 col-lg-3 p-1 ">
                     <ScalePicker selectedKey={selectedKey}
                         setSelectedKey={setSelectedKey}
                         selectedScale={selectedScale}

@@ -121,11 +121,14 @@ function ScaleDisplay({ selectedScale,
 
     return (
         <>
-        <div className='card m-auto w-25'>
-            <h2 className='text-center m-1'>{selectedKey} {scales[selectedScale].name}</h2>
+        <div className='d-flex justify-content-center'>
+            <div className='card d-inline-block p-1'>
+                <h2 className='text-center m-1'>{selectedKey} {scales[selectedScale].name}</h2>
+            </div>
+
         </div>
         <div className="d-flex justify-content-center my-5">
-            <div className="d-flex gap-3">
+            <div className="d-flex gap-1 gap-md-4">
                 { notes.map((note, index) => {
                     const result = cardResults[index]
                     const currentClass = index == currCardIndex && isListening ? 'current' : ''

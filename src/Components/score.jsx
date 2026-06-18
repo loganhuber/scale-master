@@ -152,13 +152,13 @@ function Score({ roundComplete,
                         </h2>
                     </div>
                     <div className="row d-flex justify-content-center gap-2">
-                    <button className="btn btn-light col-1" onClick={
+                    <button className="btn btn-light col-6 col-md-2" onClick={
                         () => {
                             setRestart(true)
                             setScoreDisplayed(false)
                         }}
                     >Go Again</button>
-                    <button className="btn btn-light col-1"
+                    <button className="btn btn-light col-6 col-md-2"
                     onClick={() => {
                         setScoreDisplayed(false)
                     }}
