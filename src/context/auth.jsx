@@ -1,7 +1,13 @@
 import { getErrorMessage, getToken } from "./utils"
 
-const userUrlBase = 'http://127.0.0.1:8000/api/users'
-const scoresUrlBase = 'http://127.0.0.1:8000/api/scores'
+// Local Urls for development
+// const userUrlBase = 'http://127.0.0.1:8000/api/users'
+// const scoresUrlBase = 'http://127.0.0.1:8000/api/scores'
+
+// Production Urls
+const userUrlBase = 'https://api.scale-master.xyz/api/users'
+const scoresUrlBase = 'https://api.scale-master.xyz/api/scores'
+
 let fetchPromise = null
 
 // check if state first to see if there is a current user
