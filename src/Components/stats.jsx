@@ -27,6 +27,7 @@ function Stats({ viewingStats, setViewingStats}) {
     useEffect(() => {
         const pages = Math.ceil(userStats.length / totalPerPage)
         setTotalPages(pages)
+        
     }, [userStats])
 
 
@@ -64,7 +65,12 @@ function Stats({ viewingStats, setViewingStats}) {
                                     )
                                 })
                                 :
-                                <li>No Stats Yet</li>
+                                <tr>
+                                    <td>No Stats Yet</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
                             }
                             </tbody>
                         

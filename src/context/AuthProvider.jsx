@@ -16,8 +16,9 @@ export function AuthProvider({ children }) {
         }
         try {
             const userData = await getCurrentUser()
-            const userScores = await getUserScores(userData['id'])
-            setUserStats(userScores)
+            // const userScores = await getUserScores(userData['id'])
+            setUserStats(userData['scores'])
+            
             setCurrUser(userData["username"])
         }
         catch (error) {
