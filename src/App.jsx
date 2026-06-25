@@ -33,8 +33,14 @@ function App() {
     const [scheduleInProgress, setScheduleInProgress] = useState(false)
     const [scheduleComplete, setScheduleComplete] = useState(false)
 
+    const [hasMicAccess, setHasMicAccess] = useState(null)
+
 
     function startMixSchedule(schedule) {
+        if (!hasMicAccess) {
+            alert("Please allow microphone access to start")
+            return;
+        }
         setScaleSchedule(schedule)
         setCurrentScheduleIndex(0)
         setScheduleInProgress(true)
@@ -84,6 +90,24 @@ function App() {
         setScheduleComplete(false)
         currScoreRef.current = []
     }, [isPlaying, scheduleInProgress])
+
+    // get mic access on start up
+    useEffect(() => {
+        async function checkMic() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    audio: true
+                })
+
+                setHasMicAccess(true)
+                stream.getTracks().forEach(track => track.stop());
+            }
+            catch(error) {
+                setHasMicAccess(false)
+            }
+        }
+        checkMic();
+    }, [])
 
     return (
         <>
@@ -145,6 +169,7 @@ function App() {
                     restart={restart}
                     setRestart={setRestart}
                     scheduleInProgress={scheduleInProgress}
+                    hasMicAccess={hasMicAccess}
                         />
                 </div>
                 <div className="col-12 col-lg-3 p-1 ">
